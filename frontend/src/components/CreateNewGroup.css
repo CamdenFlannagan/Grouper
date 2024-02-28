@@ -1,0 +1,18 @@
+.CreateNewGroup {
+    font-family: "Syne", sans-serif;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    color: #333;
+}
+
+ .CreateNewGroup input {
+    font-family: "Syne", sans-serif;
+    width: 80%;
+    padding: 13px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
