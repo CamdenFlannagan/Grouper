@@ -18,6 +18,7 @@ function Home() {
                     </div>
                     <div className="Home-nav-links">
                     <Link to="/browse">BROWSE</Link>
+                        <Link to="/BadAddGroup.html">BadAddGroup</Link>
                         <Link to="/tasks">TASKS</Link> {}
                         <Link to="/groups">GROUPS</Link> {}
                         <Link to="/login">SIGN IN</Link> {}
