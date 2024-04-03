@@ -1,0 +1,46 @@
+.groups,
+.groups * {
+  box-sizing: border-box;
+}
+.groups {
+  background: #ffffff;
+  height: 1024px;
+  position: relative;
+  overflow: hidden;
+}
+.groups .upcoming-tasks {
+  color: #52016f;
+  text-align: center;
+  font-family: "InriaSans-Regular", sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  position: absolute;
+  left: 1173px;
+  top: 206px;
+  width: 243px;
+  height: 62px;
+}
+.groups .task-1-group-due-date {
+  color: #000000;
+  text-align: right;
+  font-family: "-", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 1187px;
+  top: 320px;
+  width: 215px;
+  height: 67px;
+}
+.task-1-group-due-date-span {
+  color: #000000;
+  font-family: "InriaSans-Bold", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+.task-1-group-due-date-span2 {
+  color: #000000;
+  font-family: "InriaSans-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
