@@ -1,26 +1,50 @@
-class Member {
+import { Group } from './Group.js';
+import { Task } from './Task.js';
+
+/**
+ * Member 
+ * 
+ *  memberObject = {
+ *      userEmail: string,
+ *      points: int,
+ *      groupName: string,
+ *      groupDescription: string,
+ *      groupId: int
+ *  }
+ */
+class Member {   
+
+    
+    userEmail;
+    points;
+    groupName;
+    groupDescription;
+    groupId;
+
     /**
-     * name
-     * 
-     * a string containing the name of the member
-     * 
-     *  memberObject = {
-     *      name: String
-     *  }
+     * @param {{
+     *      userEmail: string,
+     *      points: int,
+     *      groupName: string,
+     *      groupDescription: string,
+     *      groupId: int
+     * }} memberObject 
      */
-    name;
-
     constructor(memberObject) {
-        this.name = memberObject.name;
-    }
-
-    get name() {
-        return this.name;
+        this.userEmail = memberObject.userEmail;
+        this.points = memberObject.points;
+        this.groupName = memberObject.groupName;
+        this.groupDescription = memberObject.groupDescription;
+        this.groupId = memberObject.groupId;
     }
 
     get memberObject() {
         const memberObject = {
-            name: this.name
+            userEmail: this.userEmail,
+            points: this.points,
+            groupName: this.groupName,
+            groupDescription: this.groupDescription,
+            groupId: this.groupId
         };
         return memberObject;
     }

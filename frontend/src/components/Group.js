@@ -7,8 +7,8 @@ import { Member } from './Member.js';
  * A collection of Members united by a collection of Tasks to achieve a goal
  * 
  *  groupObject = {
- *      name: String,
- *      description: String,
+ *      name: string,
+ *      description: string,
  *      tasks: Task[],
  *      members: Member[]
  *  }
@@ -42,6 +42,10 @@ class Group {
      */
     members;
 
+    /**
+     * 
+     * @param {{name: string, description: string, tasks: Task[], members: Member[]}} groupObject 
+     */
     constructor(groupObject) {
         this.name = groupObject.name;
         this.description = groupObject.description;
@@ -66,6 +70,8 @@ class Group {
         };
         for (let i = 0; i < this.tasks.length; i++)
             groupObject.tasks.push(this.tasks[i].taskObject);
+        for (let i = 0; i < this.members.length; i++)
+            groupObject.members.push(this.members[i].memberObject);
         return groupObject;
     }
 }
