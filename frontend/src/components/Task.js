@@ -4,45 +4,45 @@
  * A thing that needs to get done
  * 
  *  taskObject = {
- *      name: String,
- *      instructions: String,
- *      status: String,
+ *      name: string,
+ *      instructions: string,
+ *      points: int,
+ *      isComplete: boolean,
  *      subtasks: Task[]
  *  }
  */
 class Task {
-    /**
-     * name
-     * 
-     * a string containing the name of the Task
-     */
+    
+    // a title for the task
     name;
 
-    /**
-     * instructions
-     * 
-     * a string containing instructions for how to complete the task
-     */
+    // how to complete the task
     instructions;
 
-    /**
-     * status
-     * 
-     * a string, either "incomplete" or "complete", indicating the status of the Task
-     */
-    status;
+    // how many points is the task worth?
+    points;
+
+    // is the task complete?
+    isComplete;
+
+    // how is this task broken into smaller pieces
+    subtasts;
 
     /**
-     * subtasks
-     * 
-     * a list of Tasks, all of which must be completed for this Task to be completed
+     * constructor for Task
+     * @param {{
+     *      name: string,
+     *      instructions: string,
+     *      points: int,
+     *      isComplete: boolean,
+     *      subtasks: Task[]
+     * }} taskObject 
      */
-    subtasks;
-
     constructor(taskObject) {
         this.name = taskObject.name;
         this.instructions = taskObject.instructions;
-        this.status = taskObject.status;
+        this.points = taskObject.points;
+        this.isComplete = taskObject.isComplete;
         this.subtasks = [];
         for (let i = 0; i < taskObject.subtasks.length; i++)
             this.subtasks.push(new Task(taskObject.subtasks[i]));
@@ -52,7 +52,7 @@ class Task {
      * Add a task to the sub-task list
      * @param {Task} task 
      */
-    addTask(task) {
+    addSubtask(task) {
         this.subtasks.push(task);
     }
 
@@ -63,7 +63,8 @@ class Task {
         const taskObject = {
             name: this.name,
             instructions: this.instructions,
-            status: this.status,
+            points: this.points,
+            isComplete: this.isComplete,
             subtasks: []
         };
         for (let i = 0; i < this.subtasks.length; i++)
