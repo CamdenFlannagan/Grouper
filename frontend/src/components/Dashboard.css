@@ -1,0 +1,67 @@
+.Dashboard {
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+}
+.Dashboard-screen {
+    background-color: #C2AFF0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    overflow-y: auto;
+}
+.Dashboard-header {
+    display: flex;
+    height: 23vh;
+    width: 85.8%;
+}
+.Dashboard-scrollable-bottom {
+    display: flex;
+    width: 85.8%;
+    min-height: 77vh;
+    overflow-y: auto;
+}
+.Dashboard-page-name-container {
+    text-decoration: none;
+    height: 15vh;
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.Dashboard-page-name {
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    font-size: 6vh;
+}
+.Dashboard-add-circle {
+    width: 20vw;
+    height: 35vh;
+    border-radius: 50%;
+    background-color: #D2C3F8;
+    position: absolute;
+    right: -6vw;
+    top: -8vh;
+}
+.Dashboard-circle-plus-container {
+    width: 20vw;
+    height: 35vh;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+.Dashboard-circle-plus {
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    color: #616063;
+    text-decoration: none;
+    font-size: 23vh;
+    position: absolute;
+    right: 7vw;
+    top: 4vh;
+}

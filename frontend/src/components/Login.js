@@ -37,7 +37,7 @@ const Login = () => {
         setSuccess('');
 
         try {
-            const result = await signInWithPopup(auth, provider);
+            await signInWithPopup(auth, provider); //handles register if no account and sign in
             setSuccess("You're logged in successfully!");
         } catch (error) {
             setError(error.message);
@@ -72,7 +72,7 @@ const Login = () => {
                 </div>
                 <div className="input-container">
                     <input
-                        type="password"
+                        type="password" //blurs password
                         value={password}
                         placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}

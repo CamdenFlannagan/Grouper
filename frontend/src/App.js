@@ -14,13 +14,11 @@ import Browse from './components/Browse';
 import './components/Browse.css';
 import ProtectedRoute from './ProtectedRoute';
 import Dashboard from './components/Dashboard';
-import Sidebar from './components/Sidebar';
 
 function App() {
   return (
     <Router>
       <div style={{ display: 'flex' }}>
-        <Sidebar />
         <div style={{ flex: 1}}> 
           <Routes>
             <Route path="/" element={<Home />} />
