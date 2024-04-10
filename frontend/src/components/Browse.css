@@ -1,50 +1,54 @@
 .Browse {
-    font-family: "Syne", sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    color: #333;
-  }
+  font-family: "Syne", sans-serif;
+  max-width: 60%;
+  margin: auto;
+  padding: 5%;
+  color: #333;
+}
 
-  .Browse input {
-    font-family: "Syne", sans-serif;
-    width: 80%;
-    padding: 13px;
-    margin-bottom: 30px;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .Browse button {
-    font-family: "Syne", sans-serif;
-    padding: 10px 20px;
-    border: none;
-    background-color:#f9f9f9 ;
-    color: black;
-    border-radius: 4px;
-    float: right;
-  }
-  
-  .Browse button:hover {
-    background-color: #333;
-  }
-  
-  .Browse div {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  .Browse > div > div {
-    font-family: "Syne", sans-serif;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-  }
-  
- 
- 
+.BrowseBG {
+  background-image: url(../assets/loginbackground.jpeg);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+.Browse input {
+  font-family: "Syne", sans-serif;
+  width: 80%;
+  padding: 13px;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.Browse button {
+  font-family: "Syne", sans-serif;
+  padding: 10px 20px;
+  border: none;
+  background-color: #f9f9f9;
+  color: black;
+  border-radius: 4px;
+  float: right;
+}
+
+.Browse button:hover {
+  background-color: #333;
+}
+
+.Browse div {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.Browse>div>div {
+  font-family: "Syne", sans-serif;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
