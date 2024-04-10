@@ -1,18 +1,123 @@
-.CreateNewGroup {
-    font-family: "Syne", sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    color: #333;
+.CNG {
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: black;
 }
 
- .CreateNewGroup input {
+.CNG-screen {
+    background-color: #E8B229;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    overflow-y: auto;
+}
+
+.CNG-header {
+    display: flex;
+    height: 23vh;
+    width: 85.8%;
+}
+
+.CNG-scrollable-bottom {
+    display: flex;
+    width: 100%;
+    min-height: 77vh;
+    overflow-y: auto;
+    padding-left: 10%;
+    flex-direction: column;
+}
+
+.CNG-page-name-container {
+    text-decoration: none;
+    height: 15vh;
+    width: 35vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.CNG-page-name {
     font-family: "Syne", sans-serif;
-    width: 80%;
-    padding: 13px;
-    margin-bottom: 30px;
-    box-sizing: border-box;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    font-size: 6vh;
+}
+
+.CNG-add-circle {
+    width: 20vw;
+    height: 35vh;
+    border-radius: 50%;
+    background-color: #EED189;
+    position: absolute;
+    right: -6vw;
+    top: -8vh;
+}
+
+.CNG-circle-plus-container {
+    width: 20vw;
+    height: 35vh;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.CNG-circle-plus {
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    color: #616063;
+    text-decoration: none;
+    font-size: 12vh;
+    position: absolute;
+    right: 8vw;
+    top: 12vh;
+}
+.CNG-input-container {
+    margin: 1.45vh 0;
+}
+.CNG-inputBox {
+    padding: 10px;
+    border: .7px solid black;
+    border-radius: .9vw;
+    width: 20vw;
+    height: 3.5vh;
+    font-family: "Syne", sans-serif;
+    flex-direction: row;
+}
+.CNG-smaller {
+    font-family: "Syne", sans-serif;
+    font-weight: 200;
+    color: #616063;
+    text-decoration: none;
+    font-size: 2vh;
+    margin-bottom: 1vh;
+}
+.CNG-descriptionBox {
+    padding: 10px;
+    border: .7px solid black;
+    border-radius: .9vw;
+    width: 40vw;
+    height: 30vh;
+    font-family: "Syne", sans-serif;
+    flex-direction: row;
+}
+.CNG-submitBtn {
+    background-color: black;
+    color: white;
     border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: "Syne", sans-serif;
+    border-radius: .9vw;
+    width: 21.3vw;
+    height: 5.7vh;
+}
+
+.CNG-submitBtn:hover {
+    background-color: white;
+    color: black;
 }
