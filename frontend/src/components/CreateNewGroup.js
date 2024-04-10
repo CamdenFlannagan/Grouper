@@ -1,127 +1,98 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CreateNewGroup.css'; 
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Group } from './Group.js';
-import { Task } from './Task.js';
-import { Member } from './Member.js'; 
-
-const group1 = {
-    name: "group one",
-    description: "the first group",
-    tasks: [
-        {
-            name: "do the thing",
-            instructions: "this is how to do the thing",
-            status: "complete",
-            subtasks: [
-                {
-                    name: "do the thing subtask",
-                    instructions: "do this subtask to complete the thing",
-                    status: "complete",
-                    subtasks: []
-                }
-            ]
-        },
-        {
-            name: "do the other thing",
-            instructions: "this is how to do the other thing",
-            status: "incomplete",
-            subtasks: []
-        }
-    ],
-    members: [
-        {name: "John"},
-        {name: "Patricia"},
-        {name: "Carol"},
-        {name: "Ronald"}
-    ]
-};
-
-const group2 = {
-    name: "group two",
-    description: "the second group",
-    tasks: [
-        {
-            name: "the thing that needs to be done is this",
-            instructions: "complete it please",
-            status: "incomplete",
-            subtasks: [
-                {
-                    name: "this is a subtask for the thing that needs to be done",
-                    instructions: "do this in order to complete the thing",
-                    status: "complete",
-                    subtasks: []
-                },
-                {
-                    name: "this is a second subtask for the thing that needs to be done",
-                    instructions: "do this as well in order to complete the thing",
-                    status: "incomplete",
-                    subtasks: []
-                }
-            ]
-        },
-        {
-            name: "this is a thing that needs to be done",
-            instructions: "complete this as well",
-            status: "incomplete",
-            subtasks: []
-        }
-    ],
-    members: [
-        {name: "Brody"},
-        {name: "Tatiana"},
-        {name: "Omar"}
-    ]
-};
-
-const initialGroupList = [];
+import { Link } from 'react-router-dom';
+import { MdArrowBack } from 'react-icons/md';
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from '../firebase';
 
 function CreateNewGroup() {
-    const [groupName, setGroupName] = useState('');
-    const [groupDescription, setGroupDescription] = useState('');
-    const [groups, addGroup] = useState(initialGroupList);
+    const db = getFirestore(app);
 
-    const groupOne = new Group(group1);
-    const groupOneObject = groupOne.groupObject;
-    console.log(groupOneObject);
+    const [GroupName, setGroupName] = useState('');
+    const [description, setDescription] = useState('');
+    const [isPublic, setIsPublic] = useState(false);
 
-    const navigate = useNavigate();
+    const handleSubmit = async () => {
+        try {
+            const docRef = await addDoc(collection(db, "groups"), {
+                GroupName: GroupName,
+                description: description,
+                isPublic: isPublic,
 
-    const createTask = async () => {
-        navigate('/createnewgroup/createnewtask');
+            });
+            console.log("Document written with ID: ", docRef.id);
+            setGroupName('');
+            setDescription('');
+            setIsPublic(false);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
     };
-
-    function submitGroup() {
-        groups.push(new Group(groupName, groupDescription));
-        addGroup(groups);
-    }
-
     return (
-        <div className="CreateNewGroup">
-            <h1>Create a new group here!</h1>
-            <input
-                name="groupNameInput"
-                type="text"
-                placeholder="What is your group called?"
-                onChange={e => setGroupName(e.target.value)}
-            />
-            <br />
-            <input
-                name="groupDescriptionInput"
-                type="text"
-                placeholder="What's your group about?"
-                onChange={e => setGroupDescription(e.target.value)}
-            />
-            <button onClick={submitGroup}>Submit</button>
-            <button onClick={createTask}>Make new task</button>
-            <div>
-                <ul> {
-                        groups.map(group => <li key={group.groupObject.name}>
-                            <h2>{group.groupObject.name}</h2>
-                            <p>{group.groupObject.description}</p>
-                        </li>)
-                } </ul>
+        <div className="CNG">
+            <div className="CNG-screen">
+
+                <div className="CNG-header ">
+                    <div className="CNG-page-name-container">
+                        <div className="CNG-page-name ">
+                            CREATE GROUP
+                        </div>
+                        <div className="CNG-add-circle">
+                            <div className="CNG-circle-plus-container">
+                                <Link to="/dashboard">
+                                    <div className="CNG-circle-plus">
+                                        <MdArrowBack />
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="CNG-scrollable-bottom">
+                    <div className="CNG-input-container">
+                        <div className="CNG-smaller">
+                            Group Name
+                        </div>
+                        
+                        <input
+                            type="text"
+                            value={GroupName}
+                            placeholder="Group Name"
+                            onChange={(e) => setGroupName(e.target.value)}
+                            className="CNG-inputBox"
+                        />
+                    </div>
+                    <div className="CNG-input-container"></div>
+
+
+                    <div className="CNG-description-container">
+                        <div className="CNG-smaller">
+                            Group Description
+                        </div>
+                        <input
+                            type="text"
+                            value={description}
+                            placeholder="Description"
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="CNG-descriptionBox"
+                        />
+                    </div>
+                    <div className="CNG-input-container">
+                        <div className="CNG-smaller">
+                            Public Status
+                        </div>
+                        <input
+                            type="checkbox"
+                            checked={isPublic} 
+                            onChange={(e) => setIsPublic(e.target.checked)} 
+                            className="CNG-inputBox"
+                        />
+                    </div>
+                    <div className="CNG-input-container"></div>
+
+                    <button className="CNG-submitBtn" onClick={handleSubmit}>Submit</button>
+                    <div className="CNG-input-container"></div>
+                </div>
             </div>
         </div>
     );

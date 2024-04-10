@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -15,15 +16,16 @@ const Sidebar = () => {
       </button>
       <div className={`sidebar ${isOpen ? '' : 'closed'}`}>
         <button className="close-button" onClick={toggleSidebar}>X</button>
-        <a href="#profile" className="sidebar-item profile">Profile</a>
-        <a href="#create-group" className="sidebar-item">Create Group</a>
-        <a href="#join-group" className="sidebar-item">Join Group</a>
-        <a href="#your-groups" className="sidebar-item">Your Groups</a>
-        <a href="#settings" className="sidebar-item">Settings</a>
+        <Link to="/createnewgroup" className="sidebar-item profile">Create Group</Link>
+        <Link to="/createnewtask" className="sidebar-item">Create Task</Link>
+        <Link to="#join-group" className="sidebar-item">Join Group</Link>
+        <Link to="#your-groups" className="sidebar-item">Your Groups</Link>
+        <Link to="#settings" className="sidebar-item">Settings</Link>
       </div>
     </>
   );
 };
+
 
 export default Sidebar;
 
