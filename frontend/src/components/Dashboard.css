@@ -4,26 +4,62 @@
     width: 100%;
     background-color: black;
 }
+
+.Dashboard-group {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.Dashboard-name {
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.Dashboard-description {
+    font-size: 20px;
+    color: #EEE;
+    text-align: center;
+    padding: 0 10px;
+    max-width: 90%;
+}
+
 .Dashboard-screen {
     background-color: #C2AFF0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-size: calc(10px + 2vmin);
+    font-size: calc(4px + 2vmin);
     color: black;
     overflow-y: auto;
 }
+
 .Dashboard-header {
     display: flex;
     height: 23vh;
-    width: 85.8%;
+    width: calc(85.8% - 200px);
 }
-.Dashboard-scrollable-bottom {
+
+.Dashboard-SB {
     display: flex;
-    width: 85.8%;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: calc(85.8% - 200px);
     min-height: 77vh;
     overflow-y: auto;
+    padding-left: 100px;
 }
+
 .Dashboard-page-name-container {
     text-decoration: none;
     height: 15vh;
@@ -32,6 +68,7 @@
     align-items: center;
     justify-content: space-around;
 }
+
 .Dashboard-page-name {
     font-family: "Syne", sans-serif;
     font-weight: 700;
@@ -39,6 +76,7 @@
     text-decoration: none;
     font-size: 6vh;
 }
+
 .Dashboard-add-circle {
     width: 20vw;
     height: 35vh;
@@ -48,13 +86,15 @@
     right: -6vw;
     top: -8vh;
 }
-.Dashboard-circle-plus-container {
+
+.Dashboard-new-group-icon-container {
     width: 20vw;
     height: 35vh;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
 }
+
 .Dashboard-circle-plus {
     font-family: "Syne", sans-serif;
     font-weight: 700;
@@ -64,4 +104,18 @@
     position: absolute;
     right: 7vw;
     top: 4vh;
+}
+
+.Dashboard-new-group-icon-container:hover {
+    cursor: pointer;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px #9b59b6, 0 0 25px #9b59b6, 0 0 50px #9b59b6, 0 0 100px #9b59b6;
+    }
+    to {
+        box-shadow: 0 0 10px #ffffff, 0 0 30px #ffffff, 0 0 60px #ffffff, 0 0 120px #ffffff;
+    }
 }
