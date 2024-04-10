@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
+import { Group } from './Group.js';
+
+// getting the testing groups from Group.js
+import { group1, group2 } from './Group.js';
+
+
 
 function Browse() {
     const navigate = useNavigate();
     const [search, findWord] = useState('');
     const [groups, setGroups] = useState([
         //Using static groups as an example. Will use firebase to search through groups when team finishes that.
-        { id: 1, name: 'Art 101', description: 'Austin Rodriguez, CTAG: YALE UNIVERSITY' }, 
-        { id: 2, name: 'Calculus 1 Midterm', description: 'Francisco Abraham,  CTAG: WHEATON COLLEGE' }
-   
+        group1,
+        group2
     ]);
 
     const handleLogout = async () => {
