@@ -15,6 +15,7 @@ import './components/Browse.css';
 import ProtectedRoute from './ProtectedRoute';
 import Dashboard from './components/Dashboard';
 import Group_Page from './components/Group_Page';
+import './components/Group_Page.css'
 
 function App() {
   return (

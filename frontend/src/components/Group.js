@@ -82,8 +82,8 @@ class Group {
 }
 
 const group1 = {
-    name: "group one",
-    description: "the first group",
+    name: "Group One",
+    description: "This is the description for the first group. It is informative enough to explain what its about but is fairly concise",
     tasks: [
         {
             name: "do the thing",

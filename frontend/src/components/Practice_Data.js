@@ -1,7 +1,7 @@
 const group1 = {
     id: 1,
-    name: "group one",
-    description: "the first group",
+    name: "Group One",
+    description: "This is the group's description. Its short but informative, summarizing the mission of the group.",
     tasks: [
         {
             name: "do the thing",
