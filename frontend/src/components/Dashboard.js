@@ -32,6 +32,12 @@ function Dashboard() {
     return (
         <div className="Dashboard">
             <div className="Dashboard-screen">
+                <nav className="Dashboard-nav">
+                    <div className="Dashboard-nav-links">
+                        <Link to="/browse">BROWSE</Link>
+                        <Link to="/tasks">TASKS</Link> {}
+                    </div>
+                </nav>
                 <Sidebar />
                 <div className="Dashboard-header">
                     <div className="Dashboard-page-name-container">
