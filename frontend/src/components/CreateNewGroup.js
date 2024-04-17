@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CreateNewGroup.css'; 
 import { Link } from 'react-router-dom';
-import { MdArrowBack } from 'react-icons/md';
+//import { MdArrowBack } from 'react-icons/md';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from '../firebase';
 
@@ -41,7 +41,7 @@ function CreateNewGroup() {
                             <div className="CNG-circle-plus-container">
                                 <Link to="/dashboard">
                                     <div className="CNG-circle-plus">
-                                        <MdArrowBack />
+                                    
                                     </div>
                                 </Link>
                             </div>

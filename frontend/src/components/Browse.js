@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Button } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { Group } from './Group.js';
 
-// getting the testing groups from Group.js
-import { group1, group2 } from './Group.js';
-
-
+import { prac_groups } from './Practice_Data';
 
 function Browse() {
     const navigate = useNavigate();
     const [search, findWord] = useState('');
-    const [groups, setGroups] = useState([
-        //Using static groups as an example. Will use firebase to search through groups when team finishes that.
-        group1,
-        group2
-    ]);
+
+    const _groups = [];
+    prac_groups.forEach((group, groupId) => {
+        _groups.push(group);
+    });
+    const [groups, setGroups] = useState(_groups);
 
     const handleLogout = async () => {
         await signOut(auth);
@@ -26,6 +26,14 @@ function Browse() {
     const handleSearch = (e) => {
         findWord(e.target.value);
     };
+    
+    /*const handleJoin = (groupId) => {
+        navigate('/group_page', {
+            state: {
+                id: groupId
+            }
+        });
+    };*/
 
     const filteredGroups = groups.filter(group =>
         group.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -47,6 +55,11 @@ function Browse() {
                     <div key={group.id}>
                         <h2>{group.name}</h2>
                         <p>{group.description}</p>
+                        <button
+                            onClick={() => {
+                                navigate('/group_page', { state : {groupId: group.id} });
+                            }}
+                        >Join</button>
                     </div>
                 ))}
             </div>

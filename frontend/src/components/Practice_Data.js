@@ -1,4 +1,5 @@
-export const group1 = {
+const group1 = {
+    id: 1,
     name: "group one",
     description: "the first group",
     tasks: [
@@ -30,7 +31,8 @@ export const group1 = {
     ]
 };
 
-export const group2 = {
+const group2 = {
+    id: 2,
     name: "group two",
     description: "the second group",
     tasks: [
@@ -66,3 +68,9 @@ export const group2 = {
         {name: "Omar"}
     ]
 };
+
+const prac_groups = new Map();
+prac_groups.set(1, group1);
+prac_groups.set(2, group2);
+
+export { prac_groups };
