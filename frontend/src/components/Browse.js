@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import Sidebar from './Sidebar';
 
@@ -13,12 +14,24 @@ import { prac_groups } from './Practice_Data';
 function Browse() {
     const navigate = useNavigate();
     const [search, findWord] = useState('');
+    //Fetches real groups from firebase
+    const [groups, setGroups] = useState([]);
 
-    const _groups = [];
+    useEffect(() => {
+        const fetchGroups = async () => {
+                const groupsCollectionRef = collection(db, "groups");
+                const data = await getDocs(groupsCollectionRef);
+                setGroups(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        };
+        fetchGroups();
+    }, []);
+
+    //Demo version by Camden with fake groups
+    /*const _groups = [];
     prac_groups.forEach((group, groupId) => {
         _groups.push(group);
     });
-    const [groups, setGroups] = useState(_groups);
+    const [groups, setGroups] = useState(_groups);*/
 
     const handleLogout = async () => {
         await signOut(auth);
@@ -31,7 +44,7 @@ function Browse() {
     };
 
     const filteredGroups = groups.filter(group =>
-        group.name.toLowerCase().includes(search.toLowerCase()) ||
+        group.GroupName.toLowerCase().includes(search.toLowerCase()) ||
         group.description.toLowerCase().includes(search.toLowerCase())
     );
 
@@ -52,9 +65,9 @@ function Browse() {
                 <div>
                     {filteredGroups.map(group => (
                         <div key={group.id}>
-                            <h2>{group.name}</h2>
+                            <h2>{group.GroupName}</h2> 
                             <p>{group.description}</p>
-                        <button
+                        <button //For the fake groups, replace GroupName with name
                             onClick={() => {
                                 navigate('/group_page', { state : {groupId: group.id} });
                             }}
