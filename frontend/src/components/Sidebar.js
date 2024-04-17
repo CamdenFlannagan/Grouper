@@ -20,9 +20,8 @@ const Sidebar = () => {
       <div className={`sidebar ${isOpen ? '' : 'closed'}`}>
         <button className="close-button" onClick={toggleSidebar}>X</button>
         <Link to="/createnewgroup" className="sidebar-item profile">Create Group</Link>
-        <Link to="/createnewtask" className="sidebar-item">Create Task</Link>
         <Link to="/browse" className="sidebar-item">Browse Groups</Link>
-        <Link to="#your-groups" className="sidebar-item">Your Groups</Link>
+        <Link to="/dashboard" className="sidebar-item">Dashboard</Link>
         <Link to="#settings" className="sidebar-item">Settings</Link>
         <Link to="/home" className="sidebar-item">Logout</Link>
       </div>

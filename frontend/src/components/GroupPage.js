@@ -3,15 +3,15 @@ import { useLocation} from 'react-router-dom';
 import { useState } from 'react';
 import Sidebar from './Sidebar.js';
 
-import { prac_groups } from './Practice_Data';
-
-function Group_Page() {
+function GroupPage() {
+    const navigate = useNavigate();
     const { state } = useLocation();
     const groupObject = JSON.parse(state.groupObject);
 
-    const displayMembers = groupObject.members.map(member => (
-        <p>{member.name}</p>
-    ));
+    const displayMembers = [];
+    for (let i = 0; i < groupObject.members.length; i++)
+        displayMembers.push(<p>{groupObject.members[i].name}</p>);
+    displayMembers.push(<button>Invite</button>);
 
     function displayTasks(taskList, indeces) {
         let toReturn = [];
@@ -26,6 +26,7 @@ function Group_Page() {
                     <button onClick={() => {
                         completeTask(indecesCopy);
                     }}>Complete</button>
+                    <button>Add Subtask</button>
                     {displayTasks(taskList[i].subtasks, indeces)}
                 </div>
             ));
@@ -52,7 +53,7 @@ function Group_Page() {
             if (taskList[indeces[0]].subtasks.length === 0) {
                 taskList.splice(indeces[0], 1);
             } else {
-                alert('Complete all subtasks!');
+                alert('Complete all subtasks first!');
             }
         } else {
             completeTaskHelper(taskList[indeces.pop()].subtasks, indeces);
@@ -69,6 +70,9 @@ function Group_Page() {
             </div>
             <div className="GroupPageLeft">
                 <h2>Tasks</h2>
+                <button onClick={() => {
+                    navigate('/createnewgroup/createnewtask', { state : { groupObject: JSON.stringify(groupObject) }});
+                }}>Add Task</button>
                 {tasks}
             </div>
             <Sidebar />
@@ -76,4 +80,4 @@ function Group_Page() {
     );
 }
 
-export default Group_Page;
+export default GroupPage;

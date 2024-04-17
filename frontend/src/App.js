@@ -14,8 +14,8 @@ import Browse from './components/Browse';
 import './components/Browse.css';
 import ProtectedRoute from './ProtectedRoute';
 import Dashboard from './components/Dashboard';
-import Group_Page from './components/Group_Page';
-import './components/Group_Page.css'
+import GroupPage from './components/GroupPage';
+import './components/GroupPage.css'
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/createnewgroup" element={<ProtectedRoute><CreateNewGroup /></ProtectedRoute>} />
             <Route path="/createnewgroup/createnewtask" element={<ProtectedRoute><CreateNewTask /></ProtectedRoute>} />
-            <Route path="/group_page" element={<Group_Page />} />
+            <Route path="/grouppage" element={<GroupPage />} />
           </Routes>
         </div>
       </div>

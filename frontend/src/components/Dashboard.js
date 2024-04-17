@@ -55,7 +55,7 @@ function Dashboard() {
            { 
                 groups.map((group) => (
                      <div key={group.id} className="Dashboard-group" onClick={() => {
-                        navigate('/group_page', { state : {groupId: group.id, groupObject: group.groupObject} });
+                        navigate('/grouppage', { state : {groupId: group.id, groupObject: group.groupObject} });
                      }}>
                      <div className="Dashboard-name">{group.GroupName}</div>
                      <div className="Dashboard-description">{group.description}</div>
