@@ -1,5 +1,12 @@
 .Task {
-    border: 1px solid black ;
+    border: 1px solid black;
     padding: 5px;
     margin: 5px;
+}
+
+.GroupPage {
+    margin: 15px;
+    margin-left: 105px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }

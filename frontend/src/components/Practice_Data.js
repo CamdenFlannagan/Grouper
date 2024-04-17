@@ -44,8 +44,15 @@ const group2 = {
                 {
                     name: "this is a subtask for the thing that needs to be done",
                     instructions: "do this in order to complete the thing",
-                    status: "complete",
-                    subtasks: []
+                    status: "incomplete",
+                    subtasks: [
+                        {
+                            name: "this is a triply nested subtask",
+                            instructions: "you have to do this in order to complete the parent task",
+                            status: "incomplete",
+                            subtasts: []
+                        }
+                    ]
                 },
                 {
                     name: "this is a second subtask for the thing that needs to be done",

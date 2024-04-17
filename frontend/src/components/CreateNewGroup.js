@@ -9,6 +9,7 @@ function CreateNewGroup() {
     const db = getFirestore(app);
 
     const [GroupName, setGroupName] = useState('');
+    const [groupObject, setGroupObject] = useState({});
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState(false);
 
@@ -18,12 +19,24 @@ function CreateNewGroup() {
                 GroupName: GroupName,
                 description: description,
                 isPublic: isPublic,
-
+                groupObject: JSON.stringify({
+                    name: GroupName,
+                    description: description,
+                    tasks: [],
+                    members: []
+                }) 
             });
+            
             console.log("Document written with ID: ", docRef.id);
             setGroupName('');
             setDescription('');
             setIsPublic(false);
+            setGroupObject(JSON.stringify({
+                name: GroupName,
+                description: description,
+                tasks: [],
+                members: []
+            }));
         } catch (e) {
             console.error("Error adding document: ", e);
         }

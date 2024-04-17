@@ -69,7 +69,7 @@ function Browse() {
                             <p>{group.description}</p>
                         <button //For the fake groups, replace GroupName with name
                             onClick={() => {
-                                navigate('/group_page', { state : {groupId: group.id} });
+                                navigate('/group_page', { state : {groupId: group.id, groupObject: group.groupObject} });
                             }}
                         >Join</button>
                         </div>
