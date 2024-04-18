@@ -6,7 +6,7 @@ import Sidebar from './Sidebar.js';
 function GroupPage() {
     const navigate = useNavigate();
     const { state } = useLocation();
-    const groupObject = JSON.parse(state.groupObject);
+    const [ groupObject, setGroupObject ] = useState(JSON.parse(state.groupObject));
 
     const displayMembers = [];
     for (let i = 0; i < groupObject.members.length; i++)
@@ -14,6 +14,10 @@ function GroupPage() {
     displayMembers.push(<button>Invite</button>);
 
     function displayTasks(taskList, indeces) {
+        if (taskList === undefined) {
+            alert('task list undefined');
+            return <></>;
+        }
         let toReturn = [];
         indeces.push(0);
         for (let i = 0; i < taskList.length; i++) {
@@ -21,12 +25,18 @@ function GroupPage() {
             const indecesCopy = JSON.stringify(indeces);
             toReturn.push((
                 <div className="Task" key={JSON.stringify(indeces)}>
-                    <h3>{taskList[i].name}</h3>
+                    <h3 className={taskList[i].isComplete ? "Complete" : "Incomplete"}>{taskList[i].name}</h3>
                     <p>{taskList[i].instructions}</p>
+                    <p>{taskList[i].isComplete ? 'Completed!' : 'Incomplete'}</p>
                     <button onClick={() => {
                         completeTask(indecesCopy);
                     }}>Complete</button>
-                    <button>Add Subtask</button>
+                    <button onClick={() => {
+                        navigate('/createnewgroup/createnewtask', { state : {
+                            groupObject: JSON.stringify(groupObject),
+                            indeces: indecesCopy
+                        }});
+                    }}>Add Subtask</button>
                     {displayTasks(taskList[i].subtasks, indeces)}
                 </div>
             ));
@@ -35,7 +45,7 @@ function GroupPage() {
         return toReturn;
     }
 
-    const [ tasks, redisplayTasks ] = useState(displayTasks(groupObject.tasks, []));
+    const [ displayedTasks, redisplayTasks ] = useState(displayTasks(groupObject.tasks, []));
 
     function completeTask(indeces) {
         completeTaskHelper(groupObject.tasks, JSON.parse(indeces).reverse());
@@ -44,14 +54,19 @@ function GroupPage() {
         } else {
             redisplayTasks(displayTasks(groupObject.tasks, []));
         }
+        setGroupObject(groupObject);
     }
 
     function completeTaskHelper(taskList, indeces) {
         if (indeces.length === 0) 
             alert('Huh? There\'s nothing here');
         else if (indeces.length === 1) {
-            if (taskList[indeces[0]].subtasks.length === 0) {
-                taskList.splice(indeces[0], 1);
+            let allSubtasksComplete = true;
+            for (let i = 0; i < taskList[indeces[0]].subtasks.length; i++)
+                if (taskList[indeces[0]].subtasks[i].isComplete === false)
+                    allSubtasksComplete = false;
+            if (allSubtasksComplete) {
+                taskList[indeces[0]].isComplete = true;
             } else {
                 alert('Complete all subtasks first!');
             }
@@ -71,9 +86,12 @@ function GroupPage() {
             <div className="GroupPageLeft">
                 <h2>Tasks</h2>
                 <button onClick={() => {
-                    navigate('/createnewgroup/createnewtask', { state : { groupObject: JSON.stringify(groupObject) }});
+                    navigate('/createnewgroup/createnewtask', { state : {
+                        groupObject: JSON.stringify(groupObject),
+                        indeces: JSON.stringify([0])
+                    }});
                 }}>Add Task</button>
-                {tasks}
+                {groupObject.tasks.length > 0 ? displayedTasks : <p>No tasks yet. Why not add some?</p>}
             </div>
             <Sidebar />
         </div>

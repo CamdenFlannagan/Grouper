@@ -6,12 +6,12 @@ const group1 = {
         {
             name: "do the thing",
             instructions: "this is how to do the thing",
-            status: "complete",
+            isComplete: false,
             subtasks: [
                 {
                     name: "do the thing subtask",
                     instructions: "do this subtask to complete the thing",
-                    status: "complete",
+                    isComplete: false,
                     subtasks: []
                 }
             ]
@@ -19,7 +19,7 @@ const group1 = {
         {
             name: "do the other thing",
             instructions: "this is how to do the other thing",
-            status: "incomplete",
+            isComplete: false,
             subtasks: []
         }
     ],
@@ -39,17 +39,17 @@ const group2 = {
         {
             name: "the thing that needs to be done is this",
             instructions: "complete it please",
-            status: "incomplete",
+            isComplete: false,
             subtasks: [
                 {
                     name: "this is a subtask for the thing that needs to be done",
                     instructions: "do this in order to complete the thing",
-                    status: "incomplete",
+                    isComplete: false,
                     subtasks: [
                         {
                             name: "this is a triply nested subtask",
                             instructions: "you have to do this in order to complete the parent task",
-                            status: "incomplete",
+                            isComplete: false,
                             subtasts: []
                         }
                     ]
@@ -57,7 +57,7 @@ const group2 = {
                 {
                     name: "this is a second subtask for the thing that needs to be done",
                     instructions: "do this as well in order to complete the thing",
-                    status: "incomplete",
+                    isComplete: false,
                     subtasks: []
                 }
             ]
@@ -65,7 +65,7 @@ const group2 = {
         {
             name: "this is a thing that needs to be done",
             instructions: "complete this as well",
-            status: "incomplete",
+            isComplete: false,
             subtasks: []
         }
     ],
