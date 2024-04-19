@@ -13,6 +13,15 @@ function Tasks() {
     const [ inputedInstructions, setInputedInstructions ] = useState('');
 
     function addTask(indeces) {
+        if (indeces === '[0]') {
+            groupObject.tasks.push({
+                name: inputedName,
+                instructions: inputedInstructions,
+                isComplete: false,
+                subtasks: []
+            });
+            return;
+        }
         addTaskHelper(groupObject.tasks, JSON.parse(indeces).reverse());
         setGroupObject(groupObject);
     }
