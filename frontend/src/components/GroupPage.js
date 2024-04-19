@@ -67,7 +67,7 @@ function GroupPage() {
         
         // this would be a great spot to push the group object to the database
         // add code here . . .
-        
+
     }
 
     function completeTaskHelper(taskList, indeces) {
@@ -88,9 +88,15 @@ function GroupPage() {
         }
     }
 
+
+    const initMemberDisplay = [];
+    for (let i = 0; i < groupObject.members.length; i++)
+        initMemberDisplay.push(<p key={i}>{groupObject.members[i].email}</p>);
+
     // add users to the member list by their email
     const [ inviteUI, setInviteUI ] = useState(0);
     const [ inputedEmail, setInputedEmail ] = useState('');
+    const [ memberDisplay, setMemberDisplay ] = useState(initMemberDisplay);
     const inviteButton = (
         <div>
             <button onClick={() => {
@@ -104,17 +110,24 @@ function GroupPage() {
                 setInputedEmail(e.target.value);
             }} />
             <button onClick={() => {
-                setInviteUI(0);
-                // add code here . . .
                 // email should update the member objects
-
+                // add code here . . .
+                groupObject.members.push({
+                    email: inputedEmail
+                });
+                setGroupObject(groupObject);
+                // this would be a great place to push the groupObject to the DB
+                // add code here . . .
+                let membersToDisplay = [];
+                for (let i = 0; i < groupObject.members.length; i++)
+                    membersToDisplay.push(<p key={i}>{groupObject.members[i].email}</p>);
+                setMemberDisplay(membersToDisplay);
+                setInviteUI(0);
             }}>Submit Invitation</button>
         </div>
     );
 
-    const displayMembers = [];
-    for (let i = 0; i < groupObject.members.length; i++)
-        displayMembers.push(<p key={i}>{groupObject.members[i].email}</p>);
+    
 
     return (
         <div className="GroupPage">
@@ -122,7 +135,7 @@ function GroupPage() {
                 <h1>{groupObject.name}</h1>
                 <p>{groupObject.description}</p>
                 <h2>Members</h2>
-                {displayMembers}
+                {memberDisplay}
                 {inviteUI ? inviteInput : inviteButton}
             </div>
             <div className="GroupPageLeft">
