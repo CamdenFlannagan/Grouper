@@ -30,9 +30,13 @@ function GroupPage() {
             const indecesCopy = JSON.stringify(indeces);
             toReturn.push((
                 <div className="Task" key={JSON.stringify(indeces)}>
-                    <h3 className={taskList[i].isComplete ? "Complete" : "Incomplete"}>{taskList[i].name}</h3>
+                    <div className={taskList[i].isComplete ? "Complete" : "Incomplete"}>
+                        <h3>{taskList[i].name}</h3>
+                        <div className="IsComplete">
+                            <p>{taskList[i].isComplete ? 'Completed' : 'Incomplete'}</p>
+                        </div>
+                    </div>
                     <p>{taskList[i].instructions}</p>
-                    <p>{taskList[i].isComplete ? 'Completed!' : 'Incomplete'}</p>
                     <button onClick={() => {
                         completeTask(indecesCopy);
                     }}>Complete</button>
@@ -60,8 +64,10 @@ function GroupPage() {
             redisplayTasks(displayTasks(groupObject.tasks));
         }
         setGroupObject(groupObject);
-        // add code here . . .
+        
         // this would be a great spot to push the group object to the database
+        // add code here . . .
+        
     }
 
     function completeTaskHelper(taskList, indeces) {
