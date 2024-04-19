@@ -8,13 +8,18 @@ function GroupPage() {
     const { state } = useLocation();
     const [ groupObject, setGroupObject ] = useState(JSON.parse(state.groupObject));
 
-    const displayMembers = [];
-    for (let i = 0; i < groupObject.members.length; i++)
-        displayMembers.push(<p>{groupObject.members[i].name}</p>);
-    displayMembers.push(<button>Invite</button>);
+    /**
+     * Takes a list of tasks and displays them and their subtasks
+     * @param {*} taskList 
+     * @returns 
+     */
+    function displayTasks(taskList) {
+        return displayTasksHelper(taskList, []);
+    }
 
-    function displayTasks(taskList, indeces) {
+    function displayTasksHelper(taskList, indeces) {
         if (taskList === undefined) {
+            // if task list is undefined, something is probably wrong with the stored data
             alert('task list undefined');
             return <></>;
         }
@@ -37,7 +42,7 @@ function GroupPage() {
                             indeces: indecesCopy
                         }});
                     }}>Add Subtask</button>
-                    {displayTasks(taskList[i].subtasks, indeces)}
+                    {displayTasksHelper(taskList[i].subtasks, indeces)}
                 </div>
             ));
         }
@@ -45,16 +50,18 @@ function GroupPage() {
         return toReturn;
     }
 
-    const [ displayedTasks, redisplayTasks ] = useState(displayTasks(groupObject.tasks, []));
+    const [ displayedTasks, redisplayTasks ] = useState(displayTasks(groupObject.tasks));
 
     function completeTask(indeces) {
         completeTaskHelper(groupObject.tasks, JSON.parse(indeces).reverse());
         if (groupObject.tasks.length === 0) {
             redisplayTasks(<p>Hooray! No more tasks!</p>);
         } else {
-            redisplayTasks(displayTasks(groupObject.tasks, []));
+            redisplayTasks(displayTasks(groupObject.tasks));
         }
         setGroupObject(groupObject);
+        // add code here . . .
+        // this would be a great spot to push the group object to the database
     }
 
     function completeTaskHelper(taskList, indeces) {
@@ -75,6 +82,34 @@ function GroupPage() {
         }
     }
 
+    // add users to the member list by their email
+    const [ inviteUI, setInviteUI ] = useState(0);
+    const [ inputedEmail, setInputedEmail ] = useState('');
+    const inviteButton = (
+        <div>
+            <button onClick={() => {
+                setInviteUI(1);
+            }}>Invite</button>
+        </div>
+    );
+    const inviteInput = (
+        <div>
+            <input placeholder="enter email" onInput={e => {
+                setInputedEmail(e.target.value);
+            }} />
+            <button onClick={() => {
+                setInviteUI(0);
+                // add code here . . .
+                // email should update the member objects
+
+            }}>Submit Invitation</button>
+        </div>
+    );
+
+    const displayMembers = [];
+    for (let i = 0; i < groupObject.members.length; i++)
+        displayMembers.push(<p key={i}>{groupObject.members[i].email}</p>);
+
     return (
         <div className="GroupPage">
             <div className="GroupPageRight">
@@ -82,13 +117,14 @@ function GroupPage() {
                 <p>{groupObject.description}</p>
                 <h2>Members</h2>
                 {displayMembers}
+                {inviteUI ? inviteInput : inviteButton}
             </div>
             <div className="GroupPageLeft">
                 <h2>Tasks</h2>
                 <button onClick={() => {
                     navigate('/createnewgroup/createnewtask', { state : {
                         groupObject: JSON.stringify(groupObject),
-                        indeces: JSON.stringify([0])
+                        indeces: 'no tasks'
                     }});
                 }}>Add Task</button>
                 {groupObject.tasks.length > 0 ? displayedTasks : <p>No tasks yet. Why not add some?</p>}

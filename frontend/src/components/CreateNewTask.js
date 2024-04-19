@@ -13,7 +13,7 @@ function Tasks() {
     const [ inputedInstructions, setInputedInstructions ] = useState('');
 
     function addTask(indeces) {
-        if (indeces === '[0]') {
+        if (indeces === 'no tasks') {
             groupObject.tasks.push({
                 name: inputedName,
                 instructions: inputedInstructions,
@@ -24,6 +24,8 @@ function Tasks() {
         }
         addTaskHelper(groupObject.tasks, JSON.parse(indeces).reverse());
         setGroupObject(groupObject);
+        // add code here . . .
+        // this would be a great spot to push groupObject to the database
     }
 
     function addTaskHelper(taskList, indeces) {
