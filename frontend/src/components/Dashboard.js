@@ -1,24 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDoc, getDocs, doc, query, where, documentId } from "firebase/firestore";
 import Sidebar from './Sidebar';
 import './Dashboard.css';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../UserContext';
 
 function Dashboard() {
     const navigate = useNavigate();
     const [groups, setGroups] = useState([]);
+    const userId = useAuth();
+
+    const fetchGroups = useCallback(async () => {
+        if (!userId) {
+            console.error("User is not logged in");
+            return;
+        }
+
+        const userProfileRef = doc(db, "userProfiles", userId);
+        const userProfileSnap = await getDoc(userProfileRef);
+
+        if (userProfileSnap.exists()) {
+            const userGroupsIds = userProfileSnap.data().groupIds;
+            if (userGroupsIds.length > 0) {
+                const groupsQuery = query(collection(db, "groups"), where(documentId(), "in", userGroupsIds));
+                const querySnapshot = await getDocs(groupsQuery);
+                const groupsData = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                setGroups(groupsData);
+            } else {
+                setGroups([]);
+            }
+        } else {
+            console.error("User profile not found");
+        }
+    }, [userId]);
 
     useEffect(() => {
-        const fetchGroups = async () => {
-                const groupsCollectionRef = collection(db, "groups");
-                const data = await getDocs(groupsCollectionRef);
-                setGroups(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        let isMounted = true;
+        fetchGroups().catch(error => {
+            console.error("Failed to fetch groups:", error);
+            if (isMounted) {
+                setGroups([]);
+            }
+        });
+        return () => {
+            isMounted = false; 
         };
-        fetchGroups();
-    }, []);
+    }, [fetchGroups]);
 
     const handleLogout = async () => {
         await signOut(auth);
@@ -32,12 +62,6 @@ function Dashboard() {
     return (
         <div className="Dashboard">
             <div className="Dashboard-screen">
-                <nav className="Dashboard-nav">
-                    <div className="Dashboard-nav-links">
-                        <Link to="/browse">BROWSE</Link>
-                        <Link to="/tasks">TASKS</Link> {}
-                    </div>
-                </nav>
                 <Sidebar />
                 <div className="Dashboard-header">
                     <div className="Dashboard-page-name-container">
@@ -52,16 +76,14 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className="Dashboard-SB">
-           { 
-                groups.map((group) => (
-                     <div key={group.id} className="Dashboard-group" onClick={() => {
-                        navigate('/grouppage', { state : {groupId: group.id, groupObject: group.groupObject} });
-                     }}>
-                     <div className="Dashboard-name">{group.GroupName}</div>
-                     <div className="Dashboard-description">{group.description}</div>
-                </div>
-             ))
-           }
+
+                    {groups.map((group) => (
+                        <div key={group.id} className="Dashboard-group" onClick={() => {
+                            navigate('/groups', { state: { groupId: group.id } });
+                        }}>
+                            <div className="Dashboard-name">{group.GroupName}</div>
+                        </div>
+                    ))}
                 </div>
                 <button onClick={handleLogout}>Logout</button>
                 <button onClick={createGroup}>Make new group</button>

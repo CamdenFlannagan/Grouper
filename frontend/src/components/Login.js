@@ -6,9 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth'; 
 import { auth, provider} from '../firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
 
 
 const Login = () => {
+    const db = getFirestore();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -34,13 +37,21 @@ const Login = () => {
 
     const handleGoogleSubmit = async () => {
         setError('');
-        setSuccess('');
-
         try {
-            await signInWithPopup(auth, provider); //handles register if no account and sign in
-            setSuccess("You're logged in successfully!");
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userProfileRef = doc(db, 'userProfiles', user.uid);
+
+            await setDoc(userProfileRef, {
+                name: user.displayName || '',
+                email: user.email,
+                createdAt: new Date(),
+                groupIds: []
+            }, { merge: true });
+
+            setSuccess('Registration successful! You can now log in.');
         } catch (error) {
-            setError(error.message);
+            setError('Failed to register with Google. Please try again.');
         }
     };
 

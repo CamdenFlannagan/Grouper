@@ -30,9 +30,10 @@ const Register = () => {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const userProfileRef = doc(db, 'userProfiles', userCredential.user.uid);
             await setDoc(userProfileRef, {
-                name: name, 
+                name: name,
                 email: email,
                 createdAt: new Date(),
+                groupIds: []  
             }, { merge: true });
 
             console.log(userCredential.user);
@@ -52,6 +53,7 @@ const Register = () => {
             setSuccess('');
         }
     };
+
     
     const handleGoogleSubmit = async () => {
         setError('');
@@ -61,9 +63,10 @@ const Register = () => {
             const userProfileRef = doc(db, 'userProfiles', user.uid);
 
             await setDoc(userProfileRef, {
-                name: user.displayName,
+                name: user.displayName || '',
                 email: user.email,
                 createdAt: new Date(),
+                groupIds: [] 
             }, { merge: true });
 
             setSuccess('Registration successful! You can now log in.');
@@ -71,6 +74,7 @@ const Register = () => {
             setError('Failed to register with Google. Please try again.');
         }
     };
+
     
     useEffect(() => {
         if (user) { 

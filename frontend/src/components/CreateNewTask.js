@@ -1,63 +1,166 @@
-import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation} from 'react-router-dom';
+import React, { useState } from 'react';
+import './CreateNewTask.css';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { getFirestore, collection, addDoc, setDoc, doc} from "firebase/firestore";
+import { app } from '../firebase';
+import { useAuth } from '../UserContext';
+import { FiChevronLeft } from "react-icons/fi";
 
 function Tasks() {
+    const db = getFirestore(app);
     const navigate = useNavigate();
-    const { state } = useLocation();
-    const [ groupObject, setGroupObject ] = useState(JSON.parse(state.groupObject));
-    const indeces = state.indeces;
+    const location = useLocation();
+    const {state} = useLocation();
+    console.log("Received state:", location.state);
+    const { groupId, memberDetails: initialMemberDetails } = state || {};
+    const [memberDetails, setMemberDetails] = useState(initialMemberDetails || []); 
+    const [membersInTask, setMembersInTask] = useState([]);
 
-    const [ inputedName, setInputedName ] = useState('');
-    const [ inputedInstructions, setInputedInstructions ] = useState('');
+    console.log("Member details:", memberDetails);
+    console.log("Group details:", membersInTask);
+    console.log("Group ID:", groupId);
+    const [TaskName, setTaskName] = useState('');
+    const [description, setDescription] = useState('');
+    const [pointValue, setPointValue] = useState();
+    const userId = useAuth();
 
-    function addTask(indeces) {
-        if (indeces === 'no tasks') {
-            groupObject.tasks.push({
-                name: inputedName,
-                instructions: inputedInstructions,
-                isComplete: false,
-                subtasks: []
-            });
+    const handleSubmit = async () => {
+        if (!userId || groupId === undefined) {
+            console.error("User is not logged in.");
             return;
         }
-        addTaskHelper(groupObject.tasks, JSON.parse(indeces).reverse());
-        setGroupObject(groupObject);
-        // add code here . . .
-        // this would be a great spot to push groupObject to the database
-    }
 
-    function addTaskHelper(taskList, indeces) {
-        if (indeces.length === 0) 
-            alert('Huh? There\'s nothing here');
-        else if (indeces.length === 1) {
-                taskList[indeces[0]].subtasks.push({
-                    name: inputedName,
-                    instructions: inputedInstructions,
-                    isComplete: false,
-                    subtasks: []
-                });
-        } else {
-            addTaskHelper(taskList[indeces.pop()].subtasks, indeces);
+        if (!TaskName.trim() || !description.trim() || membersInTask.length === 0) {
+            console.error("Please fill in all fields and assign at least one member.");
+            return;
         }
-    }
+
+        try {
+            const taskRef = await addDoc(collection(db, "groups", groupId, "tasks"), {
+                TaskName,
+                points: pointValue,
+                description,
+                isComplete: false,
+            });
+
+            // For each member, create a subdocument under the task
+            membersInTask.forEach(async (member) => {
+                await setDoc(doc(db, "groups", groupId, "tasks", taskRef.id, "assignments", member.userId), {
+                    userId: member.userId,
+                    name: member.name,
+                    isComplete: false
+                });
+            });
+
+            setTaskName('');
+            setDescription('');
+            setPointValue(0);
+            setMembersInTask([]);
+            navigate("/groups", { state: {groupId} });
+
+        } catch (e) {
+            console.error("Error adding task or assignments: ", e);
+        }
+    };
+    const handleNavigate = () => {
+        navigate("/groups", { state: { groupId } });
+    };
 
     return (
-        <div className="Tasks">
-            <h1>Create a new task here!</h1>
-            <h2>Name</h2>
-            <input placeholder="task name" onInput={e => {
-                setInputedName(e.target.value);
-            }} />
-            <h2>Instructions</h2>
-            <input placeholder="instructions for task" onInput={e => {
-                setInputedInstructions(e.target.value);
-            }} />
-            <button onClick={() => {
-                addTask(indeces);
-                navigate('/grouppage', { state : { groupObject : JSON.stringify(groupObject) }});
-            }}>Submit</button>
+        <div className="CNT">
+            <div className="CNT-screen">
+
+                <div className="CNT-header ">
+                    <div className="CNT-page-name-container">
+                        <div className="CNT-page-name ">
+                            CREATE TASK
+                        </div>
+                        <div className="CNT-add-circle">
+                            <div className="CNT-circle-plus-container">
+                                <FiChevronLeft onClick={handleNavigate} className="CNT-circle-plus" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="CNT-scrollable-bottom-1">
+                    <div className="CNT-scrollable-bottom-2">
+                        <div className="CNT-input-container">
+                            <div className="CNT-smaller">
+                                Task Name
+                            </div>
+
+                            <input
+                                type="text"
+                                value={TaskName}
+                                placeholder="Name"
+                                onChange={(e) => setTaskName(e.target.value)}
+                                className="CNT-inputBox"
+                            />
+                        </div>
+                        <div className="CNT-input-container"></div>
+
+
+                        <div className="CNT-description-container">
+                            <div className="CNT-smaller">
+                                Task Description
+                            </div>
+                            <input
+                                type="text"
+                                value={description}
+                                placeholder="Description"
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="CNT-descriptionBox"
+                            />
+                        </div>
+                        <div className="CNT-input-container">
+                            <div className="CNT-smaller">
+                                Point Value
+                            </div>
+                            <input
+                                type="number" 
+                                value={pointValue}
+                                placeholder="Points"
+                                onChange={(e) => setPointValue(parseInt(e.target.value, 10) || 0)} 
+                                className="CNT-inputBox"
+                            />
+                        </div>
+                        <div className="CNT-input-container"></div>
+
+                    </div>
+                    <div className="CNT-scrollable-bottom-3">
+
+                        <select
+                            onChange={(e) => {
+                                const selectedUserId = e.target.value;
+                                const selectedMember = memberDetails.find(member => member.userId === selectedUserId);
+                                if (selectedMember) {
+                                    setMembersInTask(prev => [...prev, selectedMember]);
+                                    setMemberDetails(prev => prev.filter(member => member.userId !== selectedUserId));
+                                }
+                            }}
+                            className="CNT-inputBox"
+                        >
+                            <option value="">Select Assignee</option>
+                            {memberDetails.map(member => (
+                                <option key={member.userId} value={member.userId}>{member.name}</option>
+                            ))}
+                        </select>
+
+                        <div>
+                            <div className="CNT-description-title">Assigned To:</div>
+                            <div className="CNT-description-text">
+                                {membersInTask.map(member => (
+                                    <li key={member.userId}>{member.name}</li>
+                                ))}
+                            </div>
+                        </div>
+
+                        <button className="CNT-submitBtn" onClick={handleSubmit}>Submit</button>
+                        <div className="CNT-input-container"></div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     );
 }

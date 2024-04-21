@@ -6,8 +6,8 @@
 }
 
 .Dashboard-group {
-    width: 200px;
-    height: 200px;
+    width: 30vh;
+    height: 30vh;
     margin: 20px;
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    width: calc(85.8% - 200px);
+    width: 80vw;
     min-height: 77vh;
     overflow-y: auto;
     padding-left: 100px;
@@ -112,6 +112,7 @@
     position: absolute;
     right: -6vw;
     top: -8vh;
+    overflow-x: hidden;
 }
 
 .Dashboard-new-group-icon-container {
