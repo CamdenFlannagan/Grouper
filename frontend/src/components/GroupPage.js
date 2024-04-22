@@ -110,14 +110,14 @@ function GroupPage() {
                 setInputedEmail(e.target.value);
             }} />
             <button onClick={() => {
-                // email should update the member objects
-                // add code here . . .
                 groupObject.members.push({
                     email: inputedEmail
                 });
                 setGroupObject(groupObject);
+                
                 // this would be a great place to push the groupObject to the DB
                 // add code here . . .
+
                 let membersToDisplay = [];
                 for (let i = 0; i < groupObject.members.length; i++)
                     membersToDisplay.push(<p key={i}>{groupObject.members[i].email}</p>);
