@@ -1,12 +1,12 @@
-.CNG {
+.TaskSubmission {
     align-items: center;
     height: 100%;
     width: 100%;
     background-color: black;
 }
 
-.CNG-screen {
-    background-color: #E8B229;
+.TaskSubmission-screen {
+    background-color: #EDEEFF;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -14,14 +14,21 @@
     color: black;
     overflow-y: auto;
 }
+.TaskSubmission-circle-plus {
+    color: grey;
+    font-size: 12vh;
+    position: absolute;
+    top: 38%;
+    right: 43%;
 
-.CNG-header {
+}
+.TaskSubmission-header {
     display: flex;
     height: 23vh;
     width: 85.8%;
 }
 
-.CNG-scrollable-bottom {
+.TaskSubmission-scrollable-bottom {
     display: flex;
     width: 100%;
     min-height: 77vh;
@@ -30,7 +37,7 @@
     flex-direction: column;
 }
 
-.CNG-page-name-container {
+.TaskSubmission-page-name-container {
     text-decoration: none;
     height: 15vh;
     width: 35vw;
@@ -39,25 +46,25 @@
     justify-content: space-around;
 }
 
-.CNG-page-name {
+.TaskSubmission-page-name {
     font-family: "Syne", sans-serif;
     font-weight: 700;
-    color: white;
+    color: black;
     text-decoration: none;
     font-size: 6vh;
 }
 
-.CNG-add-circle {
+.TaskSubmission-add-circle {
     width: 20vw;
     height: 35vh;
     border-radius: 50%;
-    background-color: #EED189;
+    background-color: #C2AFF0;
     position: absolute;
     right: -6vw;
     top: -8vh;
 }
 
-.CNG-circle-plus-container {
+.TaskSubmission-circle-plus-container {
     width: 20vw;
     height: 35vh;
     border-radius: 50%;
@@ -65,18 +72,12 @@
     align-items: center;
 }
 
-.CNG-circle-plus {
-    color: black;
-    font-size: 12vh;
-    position: absolute;
-    top: 38%;
-    right: 43%;
 
-}
-.CNG-input-container {
+.TaskSubmission-input-container {
     margin: 1.45vh 0;
 }
-.CNG-inputBox {
+
+.TaskSubmission-inputBox {
     padding: 10px;
     border: .7px solid black;
     border-radius: .9vw;
@@ -85,7 +86,8 @@
     font-family: "Syne", sans-serif;
     flex-direction: row;
 }
-.CNG-smaller {
+
+.TaskSubmission-smaller {
     font-family: "Syne", sans-serif;
     font-weight: 200;
     color: #616063;
@@ -93,7 +95,8 @@
     font-size: 2vh;
     margin-bottom: 1vh;
 }
-.CNG-descriptionBox {
+
+.TaskSubmission-descriptionBox {
     padding: 10px;
     border: .7px solid black;
     border-radius: .9vw;
@@ -102,7 +105,34 @@
     font-family: "Syne", sans-serif;
     flex-direction: row;
 }
-.CNG-submitBtn {
+.TaskSubmission-description-title {
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    color: black;
+    text-decoration: none;
+    font-size: 3vh;
+    margin-bottom: 1vh;
+
+}
+
+.TaskSubmission-description-text {
+    font-family: "Syne", sans-serif;
+    font-weight: 600;
+    color: rgb(68, 68, 68);
+    text-decoration: none;
+    font-size: 2.5vh;
+    margin-bottom: 4vh;
+}
+
+.TaskSubmission-description-container1 {
+    display: flex;
+    flex-direction: column;
+    height: 24vh;
+    width: 60vw;
+    overflow: auto;
+}
+
+.TaskSubmission-submitBtn {
     background-color: black;
     color: white;
     border: none;
@@ -115,7 +145,7 @@
     height: 5.7vh;
 }
 
-.CNG-submitBtn:hover {
-    background-color: white;
+.TaskSubmission-submitBtn:hover {
+    background-color: #C2AFF0;
     color: black;
 }

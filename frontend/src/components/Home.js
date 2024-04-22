@@ -4,10 +4,6 @@ import './Home.css';
 import homeImage from '../assets/stock-teaching-image.png';
 import { Link } from 'react-router-dom';
 
-//The best way to visualize this when creating your own pages is to put a background-color on each of the div elements
-//You can use a lot of the css I used on this Home.css for your own pages or understanding of what they do
-
-
 function Home() {
     return (
         <div className="Home">

@@ -1,109 +1,217 @@
-.groups,
-.groups * {
-  box-sizing: border-box;
+.Groups {
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: white;
 }
-.groups {
-  background: #ffffff;
-  height: 1024px;
-  position: relative;
-  overflow: hidden;
+.Groups-screen{
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  overflow-y: auto;
 }
-.groups .rectangle-3 {
-  background: #f2e1f8;
-  width: 1440px;
-  height: 206px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
+.Groups-header {
+  display: flex;
+  height: 23vh;
+  width: 100vw;
+  align-items: center;
 }
-.groups .upcoming-tasks {
-  color: #52016f;
-  text-align: center;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 30px;
-  font-weight: 400;
-  position: absolute;
-  left: 1173px;
-  top: 227px;
-  width: 243px;
-  height: 62px;
+.Groups-page-name-container {
+  text-decoration: none;
+  height: 15vh;
+  width: 70vw;
+  display: flex;
+  justify-content: 'center';
 }
-.groups .task-1-group-due-date {
-  color: #000000;
-  text-align: right;
-  font-family: "-", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: absolute;
-  left: 1187px;
-  top: 320px;
-  width: 215px;
-  height: 67px;
-}
-.task-1-group-due-date-span {
-  color: #000000;
-  font-family: "InriaSans-Bold", sans-serif;
-  font-size: 20px;
+.Groups-page-name {
+  font-family: "Syne", sans-serif;
   font-weight: 700;
+  color: black;
+  text-decoration: none;
+  font-size: 6vh;
+  margin-left: 4vw;
 }
-.task-1-group-due-date-span2 {
-  color: #000000;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-}
-.groups .rectangle-1 {
-  background: #eeeeee;
-  border-radius: 15px;
-  width: 800px;
-  height: 250px;
+.Groups-circle-plus {
+  color: black;
+  font-size: 12vh;
   position: absolute;
-  left: 155px;
-  top: 235px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  top: 4%;
+  right: 3%;
+
 }
-.groups .rectangle-2 {
-  background: #eeeeee;
-  border-radius: 15px;
-  width: 800px;
-  height: 250px;
-  position: absolute;
-  left: 155px;
-  top: 597px;
+.Groups-bottom-view{
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  min-height: 77vh;
+  overflow-y: auto;
 }
-.groups .groups2 {
-  color: #52016f;
-  text-align: left;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 60px;
-  font-weight: 400;
-  position: absolute;
-  left: 155px;
-  top: 76px;
-  width: 558px;
-  height: 87px;
+.Groups-bottom-left,
+.Groups-bottom-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 77vh;
+  overflow-y: auto;
 }
-.groups .art-101 {
-  color: #000000;
-  text-align: left;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 48px;
-  font-weight: 400;
-  position: absolute;
-  left: 174px;
-  top: 258px;
-  width: 295px;
-  height: 62px;
+
+.Groups-bottom-left {
+  align-items: center;
+  width: 25vw;
 }
-.groups .comm-101 {
-  color: #000000;
-  text-align: left;
-  font-family: "InriaSans-Regular", sans-serif;
-  font-size: 48px;
-  font-weight: 400;
-  position: absolute;
-  left: 174px;
-  top: 619px;
-  width: 318px;
-  height: 72px;
+
+.Groups-bottom-right {
+  width: 75vw;
+
+}
+.Groups-add-member-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  width: 25vw;
+  text-align: center;
+  margin-top: 3vh;
+}
+
+.Groups-add-member-button a:hover {
+  background-color: #C2AFF0;
+  color: white;
+}
+
+.Groups-add-member-button a {
+  background-color: black;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  font-size: 2.3vh;
+  padding: 1vh 1vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28vh;
+  height: 2.6vw;
+}
+.Groups-members-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 50vh;
+  width: 17vw;
+  text-align: center;
+  margin-top: 3vh;
+  border-radius: 8%;
+  background-color: #C2AFF0;
+}
+.Groups-members-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  font-size: 3vh;
+  margin-top: 3vh;
+}
+.Groups-members-sub-container {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  width: 17vw;
+  text-align: center;
+  margin-top: 3vh;
+  border-radius: 8%;
+  overflow-y: auto;
+}
+.Groups-members-text {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: rgb(70, 70, 70);
+  text-decoration: none;
+  font-size: 2.5vh;
+  margin-bottom: 2vh;
+}
+.Groups-description-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  font-size: 3vh;
+  margin-top: 5.5vh;
+  margin-left: 4vh;
+}
+.Groups-description-text {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  font-size: 2.7vh;
+  margin-top: 1vh;
+  margin-left: 4vh;
+}
+.Groups-description-container {
+  display: flex;
+  flex-direction: column;
+  height: 24vh;
+  width: 60vw;
+  overflow: auto;
+}
+.Groups-tasks-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 80vw;
+  min-height: 60vh;
+  overflow-y: auto;
+  flex-direction: column;
+  
+}
+.Groups-tasks-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: black;
+  text-decoration: none;
+  font-size: 3vh;
+  margin-top: 1vh;
+  margin-left: 4vh;
+}
+.Groups-tasks-sub-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 70vw;
+  min-height: 40vh;
+  overflow-y: auto;
+  flex-direction: row;
+}
+.Groups-task {
+  width: 30vh;
+  height: 15vh;
+  margin-top: 2vw;
+  margin-left: 2.8vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #F0E6FE;
+  font-family: "Syne", sans-serif;
+  font-weight: 300;
+  color: white;
+  text-decoration: none;
+  font-size: 4vh;
+  cursor: pointer;
+}
+
+.Groups-task:hover {
+  background-color: #d8bcff;
+}
+
+.Groups-plus-sign {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  font-size: 12vh;
 }

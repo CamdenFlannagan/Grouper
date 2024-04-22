@@ -7,9 +7,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import Sidebar from './Sidebar';
 
-import { Group } from './Group.js';
 
-import { prac_groups } from './Practice_Data';
 
 function Browse() {
     const navigate = useNavigate();

@@ -1,45 +1,54 @@
 import React, { useState } from 'react';
 import './CreateNewGroup.css'; 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 //import { MdArrowBack } from 'react-icons/md';
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { app } from '../firebase';
+import { useAuth } from '../UserContext';
+import { FiChevronLeft } from "react-icons/fi";
 
 function CreateNewGroup() {
     const db = getFirestore(app);
+    const navigate = useNavigate(); 
 
     const [GroupName, setGroupName] = useState('');
-    const [groupObject, setGroupObject] = useState({});
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState(false);
-
+    const userId = useAuth();
     const handleSubmit = async () => {
+        if (!userId) {
+            console.error("User is not logged in.");
+            return;
+        }
+
         try {
             const docRef = await addDoc(collection(db, "groups"), {
                 GroupName: GroupName,
                 description: description,
                 isPublic: isPublic,
-                groupObject: JSON.stringify({
-                    name: GroupName,
-                    description: description,
-                    tasks: [],
-                    members: []
-                }) 
             });
-            
-            console.log("Document written with ID: ", docRef.id);
+
+            await setDoc(doc(db, "groups", docRef.id, "members", userId), {
+                role: 'leader',
+                points: 0
+            });
+
+            const userProfileRef = doc(db, "userProfiles", userId);
+            await updateDoc(userProfileRef, {
+                groupIds: arrayUnion(docRef.id)  
+            });
+
             setGroupName('');
             setDescription('');
             setIsPublic(false);
-            setGroupObject(JSON.stringify({
-                name: GroupName,
-                description: description,
-                tasks: [],
-                members: []
-            }));
+            navigate('/dashboard');
+
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error adding document or setting leader: ", e);
         }
+    };
+    const handleNavigate = () => {
+        navigate("/dashboard");
     };
     return (
         <div className="CNG">
@@ -52,11 +61,7 @@ function CreateNewGroup() {
                         </div>
                         <div className="CNG-add-circle">
                             <div className="CNG-circle-plus-container">
-                                <Link to="/dashboard">
-                                    <div className="CNG-circle-plus">
-                                    
-                                    </div>
-                                </Link>
+                                <FiChevronLeft onClick={handleNavigate} className="CNG-circle-plus" />
                             </div>
                         </div>
                     </div>

@@ -14,27 +14,33 @@ import Browse from './components/Browse';
 import './components/Browse.css';
 import ProtectedRoute from './ProtectedRoute';
 import Dashboard from './components/Dashboard';
-import GroupPage from './components/GroupPage';
-import './components/GroupPage.css'
+import Groups from './components/Groups';
+import './components/Groups.css'
+import TaskSubmission from './components/TaskSubmission';
+import './components/TaskSubmission.css'
+import { UserProvider } from './UserContext';
 
 function App() {
   return (
-    <Router>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1}}> 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/createnewgroup" element={<ProtectedRoute><CreateNewGroup /></ProtectedRoute>} />
-            <Route path="/createnewgroup/createnewtask" element={<ProtectedRoute><CreateNewTask /></ProtectedRoute>} />
-            <Route path="/grouppage" element={<GroupPage />} />
-          </Routes>
+    <UserProvider> 
+      <Router>
+        <div style={{ display: 'flex' }}>
+          <div style={{ flex: 1}}> 
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/browse" element={<Browse />} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/createnewgroup" element={<ProtectedRoute><CreateNewGroup /></ProtectedRoute>} />
+              <Route path="/groups/createnewtask" element={<ProtectedRoute><CreateNewTask /></ProtectedRoute>} />
+              <Route path="/groups" element={<ProtectedRoute><Groups /></ProtectedRoute>} />
+              <Route path="/groups/tasksubmission" element={<ProtectedRoute><TaskSubmission /></ProtectedRoute>} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </UserProvider>
   );
 }
 export default App;
