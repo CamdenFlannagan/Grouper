@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Sidebar.css';
-
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase'; 
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate(); 
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login'); 
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <>
@@ -23,13 +33,10 @@ const Sidebar = () => {
         <Link to="/browse" className="sidebar-item">Browse Groups</Link>
         <Link to="/dashboard" className="sidebar-item">Dashboard</Link>
         <Link to="#settings" className="sidebar-item">Settings</Link>
-        <Link to="/home" className="sidebar-item">Logout</Link>
+        <a href="#" onClick={handleLogout} className="sidebar-item">Logout</a>
       </div>
     </>
   );
 };
-
-
-
 
 export default Sidebar;

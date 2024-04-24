@@ -50,15 +50,6 @@ function Dashboard() {
         };
     }, [fetchGroups]);
 
-    const handleLogout = async () => {
-        await signOut(auth);
-        navigate('/login');
-    };
-
-    const createGroup = () => {
-        navigate('/createnewgroup');
-    };
-
     return (
         <div className="Dashboard">
             <div className="Dashboard-screen">
@@ -76,7 +67,6 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className="Dashboard-SB">
-
                     {groups.map((group) => (
                         <div key={group.id} className="Dashboard-group" onClick={() => {
                             navigate('/groups', { state: { groupId: group.id } });
@@ -85,8 +75,6 @@ function Dashboard() {
                         </div>
                     ))}
                 </div>
-                <button onClick={handleLogout}>Logout</button>
-                <button onClick={createGroup}>Make new group</button>
             </div>
         </div>
     );
