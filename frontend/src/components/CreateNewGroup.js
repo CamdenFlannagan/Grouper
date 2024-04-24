@@ -6,6 +6,7 @@ import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, }
 import { app } from '../firebase';
 import { useAuth } from '../UserContext';
 import { FiChevronLeft } from "react-icons/fi";
+import Sidebar from './Sidebar.js';
 
 function CreateNewGroup() {
     const db = getFirestore(app);
@@ -112,6 +113,7 @@ function CreateNewGroup() {
                     <div className="CNG-input-container"></div>
                 </div>
             </div>
+            <Sidebar />
         </div>
     );
 }

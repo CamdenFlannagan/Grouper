@@ -6,6 +6,7 @@ import { app } from '../firebase';
 import { useAuth } from '../UserContext';
 import { useLocation } from 'react-router-dom';
 import { FiChevronLeft } from "react-icons/fi";
+import Sidebar from './Sidebar';
 
 function TaskSubmission() {
     const db = getFirestore(app);
@@ -102,6 +103,7 @@ function TaskSubmission() {
                     <div className="TaskSubmission-input-container"></div>
                 </div>
             </div>
+            <Sidebar />
         </div>
     );
 }

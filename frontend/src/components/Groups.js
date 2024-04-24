@@ -7,6 +7,7 @@ import { useAuth } from '../UserContext';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FiChevronLeft } from "react-icons/fi";
+import Sidebar from './Sidebar';
 
 function Groups() {
   const navigate = useNavigate();
@@ -204,6 +205,7 @@ function Groups() {
           </div>
         </div>
       </div>
+      <Sidebar />
     </div>
   );
 }
