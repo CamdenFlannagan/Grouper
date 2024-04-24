@@ -185,10 +185,15 @@ function Groups() {
               <div className="Groups-tasks-title">Your Tasks:</div>
               <div className="Groups-tasks-sub-container">
                   {tasks.map((task) => (
+                    <div >
                     <div key={task.id} className="Groups-task" onClick={() => {
                       navigate('/groups/tasksubmission', { state: { groupId, taskDetails: task} });
                     }}>
                       {task.taskName}
+                    </div>
+                    <div className="Groups-ptotal">
+                    {groupId.points + "/" + task.points}
+                      </div>
                     </div>
                   ))}
 
