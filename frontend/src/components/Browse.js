@@ -30,7 +30,11 @@ function Browse() {
         findWord(e.target.value);
     };
 
-    const filteredGroups = groups.filter(group =>
+    const publicGroups = groups.filter(group => 
+        group.isPublic == true
+    );
+
+    const filteredGroups = publicGroups.filter(group =>
         group.GroupName.toLowerCase().includes(search.toLowerCase()) ||
         group.description.toLowerCase().includes(search.toLowerCase())
     );
