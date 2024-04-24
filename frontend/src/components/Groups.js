@@ -118,7 +118,6 @@ function Groups() {
       const assignmentDocRef = doc(db, "groups", groupId, "tasks", taskId, "assignments", userId);
       const assignmentDoc = await getDoc(assignmentDocRef);
 
-      // Check if the assignment exists and if it is not complete
       if (assignmentDoc.exists() && !assignmentDoc.data().isComplete) {
         tasksAssignedToUser.push({
           id: taskId,
@@ -135,7 +134,7 @@ function Groups() {
 
   useEffect(() => {
     isMounted.current = true;
-    fetchTasksForUser().catch(console.error); // Make sure to catch any errors from the async operation.
+    fetchTasksForUser().catch(console.error);
     return () => {
       isMounted.current = false;
     };
@@ -146,6 +145,9 @@ function Groups() {
   return (
     <div className="Groups">
       <div className="Groups-screen">
+      {memberDetails.find(member => member.userId === userId && member.role === 'leader') && (
+  <button onClick={() => navigate(`/groups/${groupId}/settings`)}>Group Settings</button>
+)}
         <Link to="/dashboard">
           <FiChevronLeft className="Groups-circle-plus" />
         </Link>

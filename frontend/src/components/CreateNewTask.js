@@ -25,43 +25,44 @@ function Tasks() {
     const userId = useAuth();
 
     const handleSubmit = async () => {
-        if (!userId || groupId === undefined) {
-            console.error("User is not logged in.");
-            return;
-        }
+    if (!userId || groupId === undefined) {
+        console.error("User is not logged in.");
+        return;
+    }
 
-        if (!TaskName.trim() || !description.trim() || membersInTask.length === 0) {
-            console.error("Please fill in all fields and assign at least one member.");
-            return;
-        }
+    if (!TaskName.trim() || !description.trim() || membersInTask.length === 0) {
+        console.error("Please fill in all fields and assign at least one member.");
+        return;
+    }
 
-        try {
-            const taskRef = await addDoc(collection(db, "groups", groupId, "tasks"), {
-                TaskName,
-                points: pointValue,
-                description,
-                isComplete: false,
+    try {
+        const taskRef = await addDoc(collection(db, "groups", groupId, "tasks"), {
+            TaskName,
+            points: pointValue,
+            description,
+            isComplete: false,
+        });
+
+        // For each member, create a subdocument under the task
+        membersInTask.forEach(async (member) => {
+            await setDoc(doc(db, "groups", groupId, "tasks", taskRef.id, "assignments", member.userId), {
+                userId: member.userId,
+                name: member.name,
+                isComplete: false
             });
+        });
 
-            // For each member, create a subdocument under the task
-            membersInTask.forEach(async (member) => {
-                await setDoc(doc(db, "groups", groupId, "tasks", taskRef.id, "assignments", member.userId), {
-                    userId: member.userId,
-                    name: member.name,
-                    isComplete: false
-                });
-            });
+        setTaskName('');
+        setDescription('');
+        setPointValue(0);
+        setMembersInTask([]);
+        navigate('/dashboard'); // Redirect to dashboard
 
-            setTaskName('');
-            setDescription('');
-            setPointValue(0);
-            setMembersInTask([]);
-            navigate("/groups", { state: {groupId} });
+    } catch (e) {
+        console.error("Error adding task or assignments: ", e);
+    }
+};
 
-        } catch (e) {
-            console.error("Error adding task or assignments: ", e);
-        }
-    };
     const handleNavigate = () => {
         navigate("/groups", { state: { groupId } });
     };
