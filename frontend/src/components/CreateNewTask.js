@@ -15,10 +15,12 @@ function Tasks() {
     const { groupId, memberDetails: initialMemberDetails } = state || {};
     const [memberDetails, setMemberDetails] = useState(initialMemberDetails || []); 
     const [membersInTask, setMembersInTask] = useState([]);
+    const [taskType, setTaskType] = useState([]);
 
     console.log("Member details:", memberDetails);
     console.log("Group details:", membersInTask);
     console.log("Group ID:", groupId);
+    console.log("Task Type:", taskType);
     const [TaskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
     const [pointValue, setPointValue] = useState();
@@ -30,7 +32,7 @@ function Tasks() {
         return;
     }
 
-    if (!TaskName.trim() || !description.trim() || membersInTask.length === 0) {
+    if (!TaskName.trim() || !description.trim() || !taskType.trim() || membersInTask.length === 0) {
         console.error("Please fill in all fields and assign at least one member.");
         return;
     }
@@ -40,6 +42,7 @@ function Tasks() {
             TaskName,
             points: pointValue,
             description,
+            taskType: taskType, 
             isComplete: false,
         });
 
@@ -55,6 +58,7 @@ function Tasks() {
         setTaskName('');
         setDescription('');
         setPointValue(0);
+        setTaskType([])
         setMembersInTask([]);
         navigate('/dashboard'); // Redirect to dashboard
 
