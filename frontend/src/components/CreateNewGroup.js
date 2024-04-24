@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CreateNewGroup.css'; 
 import { Link, useNavigate } from 'react-router-dom';
 //import { MdArrowBack } from 'react-icons/md';
-import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, } from "firebase/firestore";
 import { app } from '../firebase';
 import { useAuth } from '../UserContext';
 import { FiChevronLeft } from "react-icons/fi";

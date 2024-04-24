@@ -3,8 +3,10 @@ import { Button } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDocs, getDoc } from "firebase/firestore";
 import { signOut } from 'firebase/auth';
+import { app } from '../firebase';
+import { useAuth } from '../UserContext';
 import Sidebar from './Sidebar';
 
 
@@ -24,13 +26,6 @@ function Browse() {
         fetchGroups();
     }, []);
 
-    //Demo version by Camden with fake groups
-    /*const _groups = [];
-    prac_groups.forEach((group, groupId) => {
-        _groups.push(group);
-    });
-    const [groups, setGroups] = useState(_groups);*/
-
     const handleLogout = async () => {
         await signOut(auth);
         navigate('/login');
@@ -46,6 +41,32 @@ function Browse() {
         group.description.toLowerCase().includes(search.toLowerCase())
     );
 
+    const userId = useAuth();
+    const handleSubmit = async groupId => {
+        if (!userId) {
+            console.error("User is not logged in.");
+            return;
+        }
+
+        try {
+            const docRef = await getDoc(doc(db, "groups", groupId));
+
+            await setDoc(doc(db, "groups", docRef.id, "members", userId), {
+                role: 'member',
+                points: 0
+            });
+
+            const userProfileRef = doc(db, "userProfiles", userId);
+            await updateDoc(userProfileRef, {
+                groupIds: arrayUnion(docRef.id)  
+            });
+
+            navigate('/groups', { state: { groupId: docRef.id } });
+
+        } catch (e) {
+            console.error("Error adding document or setting leader: ", e);
+        }
+    };
 
     return (
         <div className='BrowseBG'>
@@ -65,11 +86,7 @@ function Browse() {
                         <div key={group.id}>
                             <h2>{group.GroupName}</h2> 
                             <p>{group.description}</p>
-                        <button //For the fake groups, replace GroupName with name
-                            onClick={() => {
-                                navigate('/grouppage', { state : {groupId: group.id, groupObject: group.groupObject} });
-                            }}
-                        >Join</button>
+                        <button onClick={handleSubmit(group.id)}>Join</button>
                         </div>
                     ))}
                 </div>
