@@ -201,7 +201,7 @@ function Groups() {
                       {task.taskName}
                     </div>
                     <div className="Groups-ptotal">
-                      {groupId.points + "/" + task.points}
+                      {groupId.points ? groupId.points : 0}/{task.points}
                     </div>
                   </div>
                 ))}
