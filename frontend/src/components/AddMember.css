@@ -1,0 +1,45 @@
+.AM {
+    background-color: #E8B229;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    color: black;
+    overflow-y: auto;
+}
+
+.AM-Page-Name {
+    font-family: "Syne", sans-serif;
+}
+
+.AM-Input {
+    padding: 10px;
+    border: .7px solid black;
+    border-radius: .9vw;
+    width: 20vw;
+    height: 3.5vh;
+    font-family: "Syne", sans-serif;
+    flex-direction: row;
+}
+
+.AM-Button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: "Syne", sans-serif;
+    border-radius: .9vw;
+    width: 21.3vw;
+    height: 5.7vh;
+}
+
+.AM-Button:hover {
+    background-color: white;
+    color: black;
+}
+
+.AM-Page-Element {
+    padding: 20px;
+}

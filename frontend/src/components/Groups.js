@@ -13,41 +13,14 @@ function AddMemberUI() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const groupId = state.groupId;
-  const [ addMemberUIIndex, setAddMemberUIIndex ] = useState(0);
-  const [ inputedEmail, setInputedEmail ] = useState('');
-
-  const addMemberButton = (
-    <div className="Groups-add-member-button" onClick={() => {
-      setAddMemberUIIndex(1);
-    }}>
-      <div>Add Members</div>
-    </div>
-  );
-
-  const addMemberInput = (
-    <div>
-      <div className="Groups-add-member-button" >
-        <div onClick={() => {
-          // 1. add the member to the group
-          // 2. add the group to the user
-          setAddMemberUIIndex(0);
-        }}>Submit</div>
-        <input placeholder="input email" onChange={e => {
-          setInputedEmail(e.target.value);
-        }} />
-      </div>
-    </div>
-  );
-
-  const addMemberUIArray = [addMemberButton, addMemberInput];
 
   return (
     <>
-      {addMemberUIArray[addMemberUIIndex]}
-      <Link to="/groups/addmember" >add member</Link>
-      <button onClick={() => {
-        navigate('/groups/addmember', { state: { groupId: JSON.stringify(groupId)}});
-      }}>add member</button>
+      <div className="Groups-add-member-button" onClick={() => {
+        navigate('/groups/addmember', {state:{groupId:groupId}});
+      }}>
+        <div>Add Members</div>
+      </div>
     </>
   );
 }
