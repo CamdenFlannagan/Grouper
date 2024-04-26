@@ -46,7 +46,7 @@ const Login = () => {
                 name: user.displayName || '',
                 email: user.email,
                 createdAt: new Date(),
-                groupIds: []
+                groupIds: user.groupIds,
             }, { merge: true });
 
             setSuccess('Registration successful! You can now log in.');

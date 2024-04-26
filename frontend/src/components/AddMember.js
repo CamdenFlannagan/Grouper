@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from './Sidebar.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { collection, query, where, getDocs, doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
@@ -50,27 +51,33 @@ function AddMember()  {
     
     return (
         <div className="AM">
-            <h1 className="AM-Page-Name">Add Member Here!</h1>
-            <div className="AM-Page-Element">
-                <input className="AM-Input" placeholder="enter email" onChange={e => {
-                    setInputedEmail(e.target.value);
-                }} />
-            </div>
-            <div className="AM-Page-Element">
-                <button className="AM-Button" onClick={() => {
-                    handleSubmit();
-                }}>Add</button>
-            </div>
-            <div className="AM-Page-Element">
-                <button className="AM-Button" onClick={() => {
-                    navigate('/groups', {state:{groupId:groupId}});
-                }}>Cancel</button>
-            </div>
-            <div className="AM-Page-Element">
-                <div className="AM-Status-Message">
-                    {statusMessageForUser}
+            <Sidebar />
+            <div className="AM-Page-Elements">
+                <h1 className="AM-Page-Name">Add Member Here!</h1>
+                <p className="AM-Instructions">
+                    Enter another user's email to add them to your group!
+                </p>
+                <div className="AM-Page-Element">
+                    <input className="AM-Input" placeholder="enter email" onChange={e => {
+                        setInputedEmail(e.target.value);
+                    }} />
                 </div>
-            </div>    
+                <div className="AM-Page-Element">
+                    <button className="AM-Button" onClick={() => {
+                        handleSubmit();
+                    }}>Add</button>
+                </div>
+                <div className="AM-Page-Element">
+                    <button className="AM-Button" onClick={() => {
+                        navigate('/groups', {state:{groupId:groupId}});
+                    }}>Cancel</button>
+                </div>
+                <div className="AM-Page-Element">
+                    <div className="AM-Status-Message">
+                        {statusMessageForUser}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

@@ -8,7 +8,15 @@
     overflow-y: auto;
 }
 
+.AM-Page-Elements {
+    margin-left: 70px;
+}
+
 .AM-Page-Name {
+    font-family: "Syne", sans-serif;
+}
+
+.AM-Instructions {
     font-family: "Syne", sans-serif;
 }
 
