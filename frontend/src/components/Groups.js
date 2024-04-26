@@ -9,6 +9,49 @@ import { useNavigate } from 'react-router-dom';
 import { FiChevronLeft } from "react-icons/fi";
 import Sidebar from './Sidebar';
 
+function AddMemberUI() {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const groupId = state.groupId;
+  const [ addMemberUIIndex, setAddMemberUIIndex ] = useState(0);
+  const [ inputedEmail, setInputedEmail ] = useState('');
+
+  const addMemberButton = (
+    <div className="Groups-add-member-button" onClick={() => {
+      setAddMemberUIIndex(1);
+    }}>
+      <div>Add Members</div>
+    </div>
+  );
+
+  const addMemberInput = (
+    <div>
+      <div className="Groups-add-member-button" >
+        <div onClick={() => {
+          // 1. add the member to the group
+          // 2. add the group to the user
+          setAddMemberUIIndex(0);
+        }}>Submit</div>
+        <input placeholder="input email" onChange={e => {
+          setInputedEmail(e.target.value);
+        }} />
+      </div>
+    </div>
+  );
+
+  const addMemberUIArray = [addMemberButton, addMemberInput];
+
+  return (
+    <>
+      {addMemberUIArray[addMemberUIIndex]}
+      <Link to="/groups/addmember" >add member</Link>
+      <button onClick={() => {
+        navigate('/groups/addmember', { state: { groupId: JSON.stringify(groupId)}});
+      }}>add member</button>
+    </>
+  );
+}
+
 function Groups() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -70,12 +113,13 @@ function Groups() {
 
     const profiles = await Promise.all(membersSnap.docs.map(async (docSnapshot) => {
       const userId = docSnapshot.id;
+      const email = docSnapshot.data().email;
       const role = docSnapshot.data().role;
       const userRef = doc(db, "userProfiles", userId);
       const userProfileSnap = await getDoc(userRef);
 
       if (userProfileSnap.exists()) {
-        return { userId, name: userProfileSnap.data().name, role };
+        return { userId, name: userProfileSnap.data().name, role, email };
       } else {
         console.log(`No profile found for user ID: ${userId}`);
         return { userId, name: "No name found", role };
@@ -143,6 +187,7 @@ function Groups() {
 
 
   console.log("Tasks: ", tasks);
+  console.log(JSON.stringify(memberDetails));
   return (
     <div className="Groups">
       <div className="Groups-screen">
@@ -159,19 +204,16 @@ function Groups() {
         </div>
         <div className="Groups-bottom-view">
           <div className="Groups-bottom-left">
-            <div className="Groups-add-member-button">
-              <Link>Add Members</Link> {}
-            </div>
-
+            <AddMemberUI />
             <div className="Groups-members-container">
               <div className="Groups-members-title">Members</div>
-              <div className="Groups-members-sub-container">
-                {memberDetails.map((member) => (
-                  <div key={member.id} className="Groups-members-text">
-                    {member.name}
-                  </div>
+                <div className="Groups-members-sub-container">
+                  {memberDetails.map((member) => (
+                    <div key={member.id} className="Groups-members-text">
+                      {member.name}
+                    </div>
                   ))}
-              </div>
+                </div>
 
             </div>
           </div>

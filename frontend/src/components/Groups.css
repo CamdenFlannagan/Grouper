@@ -74,6 +74,7 @@
   width: 25vw;
   text-align: center;
   margin-top: 3vh;
+  flex-direction: column;
 }
 
 .Groups-add-member-button a:hover {
@@ -81,7 +82,7 @@
   color: white;
 }
 
-.Groups-add-member-button a {
+.Groups-add-member-button div {
   background-color: black;
   font-family: "Syne", sans-serif;
   font-weight: 700;
@@ -94,6 +95,8 @@
   align-items: center;
   width: 28vh;
   height: 2.6vw;
+  user-select: none;
+  cursor: pointer;
 }
 .Groups-members-container {
   display: flex;
@@ -186,6 +189,8 @@
   flex-direction: row;
 }
 .Groups-task {
+  user-select: none;
+  padding: 5px;
   width: 30vh;
   height: 15vh;
   margin-top: 2vw;

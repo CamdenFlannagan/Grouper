@@ -19,6 +19,8 @@ import Groups from './components/Groups';
 import './components/Groups.css'
 import TaskSubmission from './components/TaskSubmission';
 import './components/TaskSubmission.css'
+import AddMember from './components/AddMember.js';
+import './components/AddMember.css';
 import { UserProvider } from './UserContext';
 
 
@@ -38,6 +40,7 @@ function App() {
               <Route path="/groups/createnewtask" element={<ProtectedRoute><CreateNewTask /></ProtectedRoute>} />
               <Route path="/groups" element={<ProtectedRoute><Groups /></ProtectedRoute>} />
               <Route path="/groups/tasksubmission" element={<ProtectedRoute><TaskSubmission /></ProtectedRoute>} />
+              <Route path="/groups/addmember" element={<ProtectedRoute><AddMember /></ProtectedRoute>} />
               <Route path="/groups/:groupId/settings" element={<ProtectedRoute><GroupSettings /></ProtectedRoute>} />
               
             </Routes>
