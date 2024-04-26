@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useLocation} from 'react-router-dom';
 import { useState } from 'react';
-import Sidebar from './Sidebar.js';
+
 
 function GroupPage() {
     const navigate = useNavigate();
@@ -148,7 +148,6 @@ function GroupPage() {
                 }}>Add Task</button>
                 {groupObject.tasks.length > 0 ? displayedTasks : <p>No tasks yet. Why not add some?</p>}
             </div>
-            <Sidebar />
         </div>
     );
 }

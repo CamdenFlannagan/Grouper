@@ -1,35 +1,37 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './components/Home.css';
-import CreateNewGroup from './components/CreateNewGroup';
 import './components/CreateNewGroup.css';
-import CreateNewTask from './components/CreateNewTask'; 
 import './components/CreateNewTask.css';
-import Register from './components/Register';
 import './components/Register.css';
-import Login from './components/Login';
 import './components/Login.css';
-import Browse from './components/Browse';
 import './components/Browse.css';
-import GroupSettings from './components/GroupSettings'; 
-import ProtectedRoute from './ProtectedRoute';
+import './components/Groups.css';
+import './components/TaskSubmission.css';
+import './components/AddMember.css';
+import Home from './components/Home';
+import CreateNewGroup from './components/CreateNewGroup';
+import CreateNewTask from './components/CreateNewTask';
+import Register from './components/Register';
+import Login from './components/Login';
+import Browse from './components/Browse';
 import Dashboard from './components/Dashboard';
 import Groups from './components/Groups';
-import './components/Groups.css'
 import TaskSubmission from './components/TaskSubmission';
-import './components/TaskSubmission.css'
-import AddMember from './components/AddMember.js';
-import './components/AddMember.css';
+import AddMember from './components/AddMember';
+import GroupSettings from './components/GroupSettings';
+import ProtectedRoute from './ProtectedRoute';
+import Profile from './components/Profile';
+import Sidebar from './components/Sidebar';
 import { UserProvider } from './UserContext';
-
 
 function App() {
   return (
-    <UserProvider> 
+    <UserProvider>
       <Router>
         <div style={{ display: 'flex' }}>
-          <div style={{ flex: 1}}> 
+          <Sidebar />
+          <div style={{ flex: 1 }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
@@ -42,7 +44,7 @@ function App() {
               <Route path="/groups/tasksubmission" element={<ProtectedRoute><TaskSubmission /></ProtectedRoute>} />
               <Route path="/groups/addmember" element={<ProtectedRoute><AddMember /></ProtectedRoute>} />
               <Route path="/groups/:groupId/settings" element={<ProtectedRoute><GroupSettings /></ProtectedRoute>} />
-              
+              <Route path="/profile/:userId" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             </Routes>
           </div>
         </div>
@@ -50,4 +52,5 @@ function App() {
     </UserProvider>
   );
 }
+
 export default App;

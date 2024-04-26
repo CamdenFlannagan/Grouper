@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { collection, getDoc, getDocs, doc, query, where, documentId } from "firebase/firestore";
-import Sidebar from './Sidebar';
 import './Dashboard.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../UserContext';
@@ -53,7 +52,6 @@ function Dashboard() {
     return (
         <div className="Dashboard">
             <div className="Dashboard-screen">
-                <Sidebar />
                 <div className="Dashboard-header">
                     <div className="Dashboard-page-name-container">
                         <div className="Dashboard-page-name">DASHBOARD</div>
