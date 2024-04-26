@@ -31,8 +31,14 @@ function Tasks() {
         console.error("User is not logged in.");
         return;
     }
+    //                                                       |
+    //                                                       |
+    //                                                      \|/
+    //                                                       V
+    //                                         HEY!  !taskType.trim() is causing an error!
+    //if (!TaskName.trim() || !description.trim() || !taskType.trim() || membersInTask.length === 0) {
 
-    if (!TaskName.trim() || !description.trim() || !taskType.trim() || membersInTask.length === 0) {
+    if (!TaskName.trim() || !description.trim() || membersInTask.length === 0) {
         console.error("Please fill in all fields and assign at least one member.");
         return;
     }
