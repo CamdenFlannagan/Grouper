@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDocs, getDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDocs, getDoc, collectionGroup } from "firebase/firestore";
 import { auth, db } from '../firebase';
 import { useAuth } from '../UserContext';
 import './Browse.css'; 
@@ -16,6 +16,7 @@ function Browse() {
         const fetchGroups = async () => {
             const groupsCollectionRef = collection(db, "groups");
             const data = await getDocs(groupsCollectionRef);
+
             setGroups(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
         fetchGroups();
@@ -44,6 +45,13 @@ function Browse() {
         }
         try {
             const docRef = await getDoc(doc(db, "groups", groupId));
+            
+            // if the user is already in the group, instead of joining, navigate to the group directly
+            const memberRef = await getDoc(doc(db, "groups", groupId, "members", userId));
+            if (memberRef.exists()) {
+                navigate('/groups', { state: { groupId: docRef.id } });
+                return;
+            }
 
             await setDoc(doc(db, "groups", docRef.id, "members", userId), {
                 role: 'member',
