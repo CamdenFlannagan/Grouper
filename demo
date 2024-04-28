@@ -1,0 +1,16 @@
+Add menu to pages that do not have menu sidebar. Fix bug in browse that when navigating to browse would make user join all groups in firebase. Add fully functioning join group in browse.
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	modified:   frontend/src/components/Browse.js
+#	modified:   frontend/src/components/CreateNewGroup.js
+#	modified:   frontend/src/components/Groups.js
+#	modified:   frontend/src/components/TaskSubmission.js
+#
+# Untracked files:
+#	frontend/src/components/GroupSettings.js
+#

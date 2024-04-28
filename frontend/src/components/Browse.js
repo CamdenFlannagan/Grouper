@@ -4,7 +4,7 @@ import { signOut } from 'firebase/auth';
 import { getFirestore, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, getDocs, getDoc } from "firebase/firestore";
 import { auth, db } from '../firebase';
 import { useAuth } from '../UserContext';
-import Sidebar from './Sidebar';
+import './Browse.css'; 
 
 function Browse() {
     const navigate = useNavigate();
@@ -30,9 +30,7 @@ function Browse() {
         findWord(e.target.value);
     };
 
-    const publicGroups = groups.filter(group => 
-        group.isPublic == true
-    );
+    const publicGroups = groups.filter(group => group.isPublic == true);
 
     const filteredGroups = publicGroups.filter(group =>
         group.GroupName.toLowerCase().includes(search.toLowerCase()) ||
@@ -74,10 +72,9 @@ function Browse() {
                     value={search}
                     onChange={handleSearch}
                 />
-                <button onClick={handleLogout}>Logout</button>
-                <div>
+                <div className="group-container">
                     {filteredGroups.map(group => (
-                        <div key={group.id}>
+                        <div key={group.id} className="group-item">
                             <h2>{group.GroupName}</h2>
                             <p>{group.description}</p>
                             <button onClick={() => handleSubmit(group.id)}>Join</button>
@@ -85,7 +82,6 @@ function Browse() {
                     ))}
                 </div>
             </div>
-            <Sidebar />
         </div>
     );
 }

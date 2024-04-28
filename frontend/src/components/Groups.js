@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { getFirestore, collection, query, where, getDocs, doc, getDoc} from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import './Groups.css';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { useAuth } from '../UserContext';
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FiChevronLeft } from "react-icons/fi";
-import Sidebar from './Sidebar';
 
 function AddMemberUI() {
   const navigate = useNavigate();
@@ -16,9 +14,7 @@ function AddMemberUI() {
 
   return (
     <>
-      <div className="Groups-add-member-button" onClick={() => {
-        navigate('/groups/addmember', {state:{groupId:groupId}});
-      }}>
+      <div className="Groups-add-member-button" onClick={() => navigate('/groups/addmember', { state: { groupId: groupId } })}>
         <div>Add Members</div>
       </div>
     </>
@@ -54,18 +50,17 @@ function Groups() {
   }, [groupId, navigate]);
 
   useEffect(() => {
-    let isMounted = true;
+    isMounted.current = true;
     fetchGroupDetails().catch(error => {
       console.error("Failed to fetch group details:", error);
-      if (isMounted) {
+      if (isMounted.current) {
         navigate('/dashboard');
       }
     });
     return () => {
-      isMounted = false;
+      isMounted.current = false;
     };
   }, [fetchGroupDetails, navigate]);
-
 
   const [memberDetails, setMemberDetails] = useState([]);
   
@@ -158,15 +153,11 @@ function Groups() {
     };
   }, [fetchTasksForUser]);
 
-
   console.log("Tasks: ", tasks);
   console.log(JSON.stringify(memberDetails));
   return (
     <div className="Groups">
       <div className="Groups-screen">
-      {memberDetails.find(member => member.userId === userId && member.role === 'leader') && (
-  <button onClick={() => navigate(`/groups/${groupId}/settings`)}>Group Settings</button>
-)}
         <Link to="/dashboard">
           <FiChevronLeft className="Groups-circle-plus" />
         </Link>
@@ -177,55 +168,53 @@ function Groups() {
         </div>
         <div className="Groups-bottom-view">
           <div className="Groups-bottom-left">
-            <AddMemberUI />
+            <div className="Groups-button-container"> {/* Added container for buttons */}
+              <AddMemberUI />
+              <div className="Groups-group-settings-button" onClick={() => navigate(`/groups/${groupId}/settings`)}>
+                Group Settings
+              </div>
+            </div>
             <div className="Groups-members-container">
               <div className="Groups-members-title">Members</div>
-                <div className="Groups-members-sub-container">
-                  {memberDetails.map((member) => (
-                    <div key={member.id} className="Groups-members-text">
-                      {member.name}
-                    </div>
-                  ))}
-                </div>
-
+              <div className="Groups-members-sub-container">
+                {memberDetails.map((member) => (
+                  <div key={member.id} className="Groups-members-text">
+                    {member.name}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="Groups-bottom-right">
-
             <div className="Groups-description-container">
               <div className="Groups-description-title">Description</div>
               <div className="Groups-description-text">{groupDetails ? groupDetails.description : 'Loading group details...'}</div>
             </div>
-            <div className= "Groups-tasks-container">
+            <div className="Groups-tasks-container">
               <div className="Groups-tasks-title">Your Tasks:</div>
               <div className="Groups-tasks-sub-container">
-                  {tasks.map((task) => (
-                    <div >
+                {tasks.map((task) => (
+                  <div>
                     <div key={task.id} className="Groups-task" onClick={() => {
-                      navigate('/groups/tasksubmission', { state: { groupId, taskDetails: task} });
+                      navigate('/groups/tasksubmission', { state: { groupId, taskDetails: task } });
                     }}>
                       {task.taskName}
                     </div>
                     <div className="Groups-ptotal">
-                    {groupId.points + "/" + task.points}
-                      </div>
-                    </div>
-                  ))}
-
-                {memberDetails.find(member => member.userId === userId && member.role === 'leader') && (
-                  <div className="Groups-task">
-                    <div onClick={handleNavigate} className="Groups-plus-sign">
-                      +
+                      {groupId.points + "/" + task.points}
                     </div>
                   </div>
-                )}
-
+                ))}
+                <div className="Groups-task">
+                  <div onClick={handleNavigate} className="Groups-plus-sign">
+                    +
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Sidebar />
     </div>
   );
 }

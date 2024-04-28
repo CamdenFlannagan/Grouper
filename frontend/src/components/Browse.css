@@ -3,19 +3,21 @@
   max-width: 60%;
   margin: auto;
   padding: 5%;
-  color: #333;
+  color: rgb(255, 255, 255);
 }
 
 .BrowseBG {
-  background-image: url(../assets/loginbackground.jpeg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../assets/ocean.jpg');
   max-width: 100%;
   max-height: 100%;
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-position: center;
 }
-
 
 .Browse input {
   font-family: "Syne", sans-serif;
-  width: 80%;
+  width: 100%;
   padding: 13px;
   margin-bottom: 30px;
   box-sizing: border-box;
@@ -31,24 +33,54 @@
   background-color: #f9f9f9;
   color: black;
   border-radius: 4px;
-  float: right;
+  cursor: pointer;
 }
 
 .Browse button:hover {
   background-color: #333;
+  color: white;
 }
 
 .Browse div {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 30px; 
 }
 
 .Browse>div>div {
-  font-family: "Syne", sans-serif;
   background-color: #f9f9f9;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.Browse>div>div:hover {
+  transform: scale(1.05); 
+}
+
+
+.Browse>div>div>h2 {
+  color: black; 
+  font-weight: bold;
+  margin-bottom: 10px; 
+}
+
+
+.Browse>div>div>p {
+  color: black;
+  margin-bottom: 10px; 
+}
+
+
+.Browse>div>div>button {
+  margin-top: auto; 
+}
+
+
+.Browse>div>div:hover {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); 
 }

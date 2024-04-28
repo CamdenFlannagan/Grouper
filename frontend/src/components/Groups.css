@@ -11,6 +11,7 @@
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-left: 100px;
   overflow-y: auto;
 }
 .Groups-header {
@@ -38,10 +39,11 @@
   color: black;
   font-size: 12vh;
   position: absolute;
-  top: 4%;
-  right: 3%;
+  top: 2%;
+  left: .5%;
 
 }
+
 .Groups-bottom-view{
   display: flex;
   flex-direction: row;
@@ -66,46 +68,78 @@
   width: 75vw;
 
 }
-.Groups-add-member-button {
+
+/* Button Container Styles */
+.Groups-button-container {
+  display: flex;
+  position: absolute;
+  top: 2vh; 
+  right: 9%; 
+}
+
+.Groups-add-member-button,
+.Groups-group-settings-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
-  width: 25vw;
+  height: 8vh;
+  width: 45%; 
   text-align: center;
-  margin-top: 3vh;
-  flex-direction: column;
-}
-
-.Groups-add-member-button a:hover {
-  background-color: #C2AFF0;
-  color: white;
-}
-
-.Groups-add-member-button div {
-  background-color: black;
+  margin-top: 1vh; 
+  margin-right: 5%;
+  background-color: #231f3d;
+  border-radius: 20px;
   font-family: "Syne", sans-serif;
   font-weight: 700;
   color: white;
-  text-decoration: none;
   font-size: 2.3vh;
-  padding: 1vh 1vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 28vh;
-  height: 2.6vw;
-  user-select: none;
   cursor: pointer;
+  position: relative; 
+  overflow: hidden; 
 }
+
+
+.Groups-add-member-button::before,
+.Groups-group-settings-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background-color: rgba(255, 255, 255, 0.5); 
+  border-radius: 50%;
+  animation: none;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.Groups-add-member-button:hover::before,
+.Groups-group-settings-button:hover::before {
+  animation: rayEffect 1s linear infinite;
+  opacity: 1;
+}
+
+@keyframes rayEffect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+
 .Groups-members-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 50vh;
+  flex-direction: column; /* Adjusted to place members under the title */
+  align-items: center; /* Centering members */
+  height:335px; /* Adjust as needed */
   width: 17vw;
   text-align: center;
-  margin-top: 3vh;
+  margin-top: 15vh;
   border-radius: 8%;
   background-color: #C2AFF0;
 }
@@ -115,15 +149,16 @@
   color: black;
   text-decoration: none;
   font-size: 3vh;
-  margin-top: 3vh;
+  margin-top: 1vh; /* Adjust as needed */
+  margin-bottom: 1vh; /* Adjust as needed */
 }
 .Groups-members-sub-container {
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: auto; /* Adjust as needed */
   width: 17vw;
   text-align: center;
-  margin-top: 3vh;
+  margin-top: 0.5vh; /* Adjust as needed */
   border-radius: 8%;
   overflow-y: auto;
 }
@@ -207,10 +242,39 @@
   text-decoration: none;
   font-size: 4vh;
   cursor: pointer;
+  position: relative; /* Required for pseudo-element */
+  overflow: hidden; /* Required for pseudo-element */
 }
 
-.Groups-task:hover {
-  background-color: #d8bcff;
+/* Task Button Hover Styles */
+.Groups-task::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background-color: rgba(0, 0, 0, 0.5); /* White color with transparency */
+  border-radius: 50%;
+  animation: none; /* Initially no animation */
+  opacity: 0; /* Initially hidden */
+  transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+}
+
+.Groups-task:hover::before {
+  animation: rayEffect 1s linear infinite; /* Animation for ray effect on hover */
+  opacity: 1; /* Show the rays on hover */
+}
+
+@keyframes rayEffect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
 .Groups-plus-sign {
