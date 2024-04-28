@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, getDocs, doc, getDoc, updateDoc, deleteDoc, arrayRemove } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  arrayRemove
+} from 'firebase/firestore';
 import { useAuth } from '../UserContext';
 import './GroupSettings.css';
 
@@ -10,7 +18,7 @@ function GroupSettings() {
   const navigate = useNavigate();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userId = useAuth(); 
+  const userId = useAuth();
 
   useEffect(() => {
     async function fetchMembers() {
@@ -32,7 +40,6 @@ function GroupSettings() {
           })
         );
 
-        // Sort members by points
         membersList.sort((a, b) => b.points - a.points);
         setMembers(membersList);
       } catch (error) {
@@ -47,7 +54,7 @@ function GroupSettings() {
   const isLeader = members.some(member => member.id === userId && member.role === 'leader');
 
   const confirmAndRemoveMember = async memberId => {
-    if (members.length === 1) {
+    if (memberId === userId && members.length === 1) {
       if (!window.confirm("You are the last member in the group. Removing yourself will delete the group. Continue?")) {
         return;
       }
@@ -68,9 +75,26 @@ function GroupSettings() {
         return;
       }
 
-      setMembers(members.filter(member => member.id !== memberId));
+      setMembers(prevMembers => prevMembers.filter(member => member.id !== memberId));
     } catch (error) {
       console.error('Error removing member from group:', error);
+    }
+  };
+
+  const promoteMember = async memberId => {
+    if (!window.confirm("Are you sure you want to promote this member to leader?")) {
+      return;
+    }
+
+    try {
+      const memberRef = doc(db, 'groups', groupId, 'members', memberId);
+      await updateDoc(memberRef, {
+        role: 'leader'
+      });
+
+      setMembers(prevMembers => prevMembers.map(member => member.id === memberId ? { ...member, role: 'leader' } : member));
+    } catch (error) {
+      console.error('Error promoting member:', error);
     }
   };
 
@@ -92,13 +116,12 @@ function GroupSettings() {
           {isLeader && member.id !== userId && (
             <>
               <button className="GroupSettings-button" onClick={() => confirmAndRemoveMember(member.id)}>Remove</button>
+              {member.role !== 'leader' && <button className="GroupSettings-button" onClick={() => promoteMember(member.id)}>Promote</button>}
             </>
           )}
         </div>
       ))}
-      {isLeader && (
-        <button className="GroupSettings-button remove-myself" onClick={() => confirmAndRemoveMember(userId)}>Remove Myself</button>
-      )}
+      <button className="GroupSettings-button remove-myself" onClick={() => confirmAndRemoveMember(userId)}>Remove Myself</button>
       <button className="GroupSettings-button" onClick={() => navigate('/groups', { state: { groupId } })}>Back to Group</button>
     </div>
   );
